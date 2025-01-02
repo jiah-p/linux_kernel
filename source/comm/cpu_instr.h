@@ -89,7 +89,7 @@ static inline void far_jump(uint32_t selector, uint32_t offset){
     );
 }
 
-// 封装 汇编代码 初始化 idt表 的加载
+// 封装 汇编代码 初始化 idt表的加载
 static inline void lidt(uint32_t start, uint32_t size){
     struct 
     {
