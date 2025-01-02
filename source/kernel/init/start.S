@@ -29,5 +29,16 @@ gdt_reload:
     jmp init_main
     
     .bss
-    
+
 .comm stack, KERNEL_STACK_SIZE
+
+
+    .text
+    .extern do_handler_unknown
+    .global exception_handler_unknown
+
+    # C 语言反汇编的这个中断返回指令是 ret 而不是 iret 所以必须使用
+    # 汇编代码进行实现
+exception_handler_unknown:
+    call do_handler_unknown
+    iret 
