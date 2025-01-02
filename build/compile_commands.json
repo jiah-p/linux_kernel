@@ -1,0 +1,27 @@
+[
+{
+  "directory": "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/boot",
+  "command": "C:/x86_64-elf-tools-windows/bin/x86_64-elf-gcc.exe  @CMakeFiles/boot.dir/includes_ASM.rsp -m32 -g -g -o CMakeFiles/boot.dir/start.S.obj -c C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/boot/start.S",
+  "file": "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/boot/start.S"
+},
+{
+  "directory": "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/boot",
+  "command": "C:/x86_64-elf-tools-windows/bin/x86_64-elf-gcc.exe  @CMakeFiles/boot.dir/includes_C.rsp -g -c -O0 -m32 -fno-pie -fno-stack-protector -fno-asynchronous-unwind-tables -g -o CMakeFiles/boot.dir/boot.c.obj -c C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/boot/boot.c",
+  "file": "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/boot/boot.c"
+},
+{
+  "directory": "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/loader",
+  "command": "C:/x86_64-elf-tools-windows/bin/x86_64-elf-gcc.exe  @CMakeFiles/loader.dir/includes_ASM.rsp -m32 -g -g -o CMakeFiles/loader.dir/start.S.obj -c C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/loader/start.S",
+  "file": "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/loader/start.S"
+},
+{
+  "directory": "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/loader",
+  "command": "C:/x86_64-elf-tools-windows/bin/x86_64-elf-gcc.exe  @CMakeFiles/loader.dir/includes_C.rsp -g -c -O0 -m32 -fno-pie -fno-stack-protector -fno-asynchronous-unwind-tables -g -o CMakeFiles/loader.dir/loader_16.c.obj -c C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/loader/loader_16.c",
+  "file": "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/loader/loader_16.c"
+},
+{
+  "directory": "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/loader",
+  "command": "C:/x86_64-elf-tools-windows/bin/x86_64-elf-gcc.exe  @CMakeFiles/loader.dir/includes_C.rsp -g -c -O0 -m32 -fno-pie -fno-stack-protector -fno-asynchronous-unwind-tables -g -o CMakeFiles/loader.dir/loader_32.c.obj -c C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/loader/loader_32.c",
+  "file": "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/loader/loader_32.c"
+}
+]
