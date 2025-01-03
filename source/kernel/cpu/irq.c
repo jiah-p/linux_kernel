@@ -8,6 +8,12 @@ void exception_handler_unknown(void);
 
 static gate_desc_t idt_table[IDE_TABLE_NR];
 
+// 初始化 8259 芯片 ICW1-4
+static void init_pic(void){
+    outb(PIC0_ICW1, PIC_ICW1_ALWAYS_1 | PIC_ICW1_ICW4);
+
+}
+
 void irq_init(void){
     for(int i = 0; i < IDE_TABLE_NR; i++){
         gate_desc_set(idt_table + i, KEREL_SELECTOR_CS, (uint32_t)exception_handler_unknown, 
