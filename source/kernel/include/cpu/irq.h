@@ -37,7 +37,28 @@ typedef void (*irq_handler_t)(exception_frame_t * frame);
 
 void irq_init(void);
 
+// 异常处理函数：按照芯片第三卷手册进行定义雨开发
 void exception_handler_divider(void);
+void exception_handler_Debug(void);
+void exception_handler_NMI(void);
+void exception_handler_breakpoint(void);
+void exception_handler_overflow(void);
+void exception_handler_bound_range(void);
+void exception_handler_invalid_opcode(void);
+void exception_handler_device_unavabliable(void);
+void exception_handler_double_fault(void);
+void exception_handler_invalid_tss(void);
+void exception_handler_sgement_not_present(void);
+void exception_handler_stack_segment_fault(void);
+void exception_handler_general_protection(void);
+void exception_handler_page_fault(void);
+void exception_handler_fpu_error(void);   // float processor unit
+void exception_handler_aligment_check(void);
+void exception_handler_machine_check(void);
+void exception_handler_simd_exception(void);
+void exception_handler_virtual_exception(void);
+void exception_handler_control_exception(void);
+
 
 int irq_install(int irq_Num, irq_handler_t handler);
 
