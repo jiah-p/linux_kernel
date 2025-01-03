@@ -33,7 +33,7 @@ gdt_reload:
 .comm stack, KERNEL_STACK_SIZE
 
 ; 汇编代码 宏替换
-; 硬件可能会自动压入 error_code
+; 硬件可能会自动压入 error_code 错误码
 .macro exception_handler name num with_error_code
     .text
     .extern do_handler_\name
@@ -42,11 +42,11 @@ gdt_reload:
     # C 语言反汇编的这个中断返回指令是 ret 而不是 iret 所以必须使用
     # 汇编代码进行实现
 exception_handler_\name:
-    .if \with_error_code == 0
+    .if \with_error_code == 0       ; 错误码
         push $0
     .endif 
 
-    push $\num # 压入错误号
+    push $\num # 压入序号
     # 保存现场
     # 保存 芯片自动保存以外的其他寄存器
     pusha   # 会自动保存 一些通用寄存器比如 eax ebx ... esp
@@ -69,7 +69,6 @@ exception_handler_\name:
     pop %ds
     popa
 
-
     ; 弹出 错误号 和 异常号
     add $(2*4), %esp 
 
@@ -78,5 +77,31 @@ exception_handler_\name:
 
 ;  默认的缺省异常 : 名称 错误号 异常号
 exception_handler unknown, -1, 0
-;  除 0 处理函数
-exception_handler dvider, 0, 0
+
+;  除 0 异常处理函数 
+exception_handler divider, 0, 0
+
+
+exception_handler Debug, 1, 0
+exception_handler NMI, 2, 0
+exception_handler breakpoint, 3, 0
+exception_handler overflow, 4, 0
+exception_handler bound_range, 5, 0
+exception_handler invalid_opcode, 6, 0
+exception_handler device_unavabliable, 7, 0
+exception_handler double_fault, 8, 1
+exception_handler invalid_tss, 10, 1
+exception_handler sgement_not_present, 11, 1
+exception_handler stack_segment_fault, 12, 1
+exception_handler general_protection, 13, 1
+exception_handler page_fault, 14, 1
+exception_handler fpu_error, 16, 0      // float processor unit
+exception_handler aligment_check, 17, 1
+exception_handler machine_check, 18, 0
+exception_handler simd_exception, 19, 0
+exception_handler virtual_exception, 20, 0
+exception_handler control_exception, 21, 1
+
+
+
+
