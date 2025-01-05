@@ -2,7 +2,9 @@
 #include "comm/boot_info.h"
 #include "include/cpu/cpu.h"
 #include "include/cpu/irq.h"
-
+#include "dev/time.h"
+#include "include/tools/log.h"
+#include "include/os_cfg.h"
 // test
 // int global_var = 0x1234;
 // int globaL_var_zero;
@@ -19,10 +21,18 @@ void kernel_init(boot_info_t * boot_info){
 //    static int static_local_var = 0x23;
 //    static int static_local_var_zero;
 
-    cpu_init(); 
+    cpu_init();
+    log_init();
     irq_init();
+    time_init();
+    
 }
 
 void init_main(){
+
+    log_print("kernel is already.");
+    log_print("Version: %s", OS_VERSION);
+    // 打开全局中断，开中断
+    // irq_enable_global();
     for(;;){}
 }

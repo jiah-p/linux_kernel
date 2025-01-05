@@ -4,6 +4,7 @@
 #include "types.h"
 
 // 一般放头文件的函数，做内联，用 static 避免重复文件生
+
 // 关中断
 static inline void cli(void){
     __asm__ __volatile("cli");

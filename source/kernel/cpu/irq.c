@@ -10,7 +10,20 @@ static gate_desc_t idt_table[IDE_TABLE_NR];
 
 // 初始化 8259 芯片 ICW1-4
 static void init_pic(void){
+    // 第一块芯片 初始化
     outb(PIC0_ICW1, PIC_ICW1_ALWAYS_1 | PIC_ICW1_ICW4);
+    outb(PIC0_ICW2, IRQ_PIC_START);
+    outb(PIC0_ICW3, 1 << 2);
+    outb(PIC0_ICW4, PIC_ICW4_8086);
+    // 第二块芯片 初始化
+    outb(PIC1_ICW1, PIC_ICW1_ALWAYS_1 | PIC_ICW1_ICW4);
+    outb(PIC1_ICW2, IRQ_PIC_START);
+    outb(PIC1_ICW3, 2);
+    outb(PIC1_ICW4, PIC_ICW4_8086);
+
+    // 中断屏蔽寄存器 初始化
+    outb(PIC0_IMR, 0xFF & ~(1 << 2));   // 第一块芯片不屏蔽第二块芯片的信号
+    outb(PIC1_IMR, 0xff)
 
 }
 
@@ -151,4 +164,57 @@ int irq_install(int irq_num, irq_handler_t handler){
     (uint32_t)handler, GETE_P_PRESENT | GATE_DPL0 | GATE_TYPE_INT);
 
     return 0;
+}
+
+// 开中断
+void irq_enable(int irq_num){
+    if(irq_num < IRQ_PIC_START){
+        return;
+    }
+    
+    irq_num -= IRQ_PIC_START;       //  调整中断序号：0 - 15 
+    if(irq_num < 8){
+        uint8_t mask = inb(PIC0_IMR) & ~(1 << irq_num);     // 屏蔽掩码 
+        outb(PIC0_IMR, mask);   // 回写 
+    }else{ 
+        irq_num -= 8;
+        uint8_t mask = inb(PIC1_IMR) & ~(1 << irq_num);
+        outb(PIC1_IMR, mask);
+    }
+}
+
+// 关中断
+void irq_disable(int irq_num){
+    if(irq_num < IRQ_PIC_START){
+        return;
+    }
+    
+    irq_num -= IRQ_PIC_START;
+    if(irq_num < 8){
+        uint8_t mask = inb(PIC0_IMR) | (1 << irq_num);     // 屏蔽掩码 
+        outb(PIC0_IMR, mask);   // 回写 
+    }else{
+        irq_num -= 8;      
+        uint8_t mask = inb(PIC1_IMR) | (1 << irq_num);
+        outb(PIC1_IMR, mask); 
+    }
+}
+
+void irq_disable_global(void){
+    cli();
+}
+
+void irq_enable_global(void){
+    sti();
+}
+
+void pic_send_eoi(int irq_num){
+    irq_num -= IRQ_PIC_START;
+    
+    if(irq_num >= 8){
+        outb(PIC1_OCW2, PIC_OCW2_EOI);
+    }else{
+        outb(PIC0_OCW2, PIC_OCW2_EOI);
+    }
+    
 }

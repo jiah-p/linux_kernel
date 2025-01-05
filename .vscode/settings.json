@@ -15,6 +15,8 @@
         "init.h": "c",
         "elf.h": "c",
         "cpu.h": "c",
-        "irq.h": "c"
+        "irq.h": "c",
+        "os_cfg.h": "c",
+        "log.h": "c"
     },
 }
