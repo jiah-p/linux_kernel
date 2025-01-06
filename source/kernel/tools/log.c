@@ -2,6 +2,7 @@
 #include "include/os_cfg.h"
 #include "comm/types.h"
 #include "comm/cpu_instr.h"
+#include "include/tools/klib.h"
 
 #include COM1_PORT          0x3F8
 
@@ -18,7 +19,17 @@ void log_init(void){
 }
 
 void log_print(const char * fmt, ...){
-    const char * p = fmt;
+    // fmt 及 可变参数进行处理
+    char str_buf[128];
+    kernel_memset(str_buf, 0, sizeof(str_buf));
+    // gcc 宏
+    va_list args;
+    va_start(args, fmt);        // fmt 可变参数 -> args
+    
+    kernel_vsprint(str_buf, fmt, args);
+    va_end(args);
+    
+    const char * p = str_buf;
 
     while(*p != '\0'){
         // 检测 串行接口 5号寄存器第六位 是否忙

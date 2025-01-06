@@ -1,7 +1,7 @@
 #include "include/cpu/irq.h"
 #include "include/cpu/cpu.h"
 #include "include/os_cfg.h"
-
+#include "include/tools/log.h"
 #define IDE_TABLE_NR         128
 
 void exception_handler_unknown(void);
@@ -60,9 +60,31 @@ void irq_init(void){
     init_pic();
 }
 
+// 打印 cpu registers 信息
+void dump_core_regs(exception_frame_t * frame){
+    log_print("IRQ: %d, error code: %d", frame->num, frame->error_code);
+
+    log_print("CS: %d\n=DS: %d\nES: %d\nSS: %d\nFS: %d\nGS: %d",
+    frame->cs, frame->ds, frame->es, frame->ds, frame->fs, frame->gs);
+
+    log_print("EAX: 0x%x\n" "EBX: 0x%x\n" "ECX: 0x%x\n" "EDX: 0x%x\n" "EDI: 0x%x\n"
+    "ESI: 0x%x\n" "EBP: 0x%x\n" "ESP: 0x%x\n", frame->eax, frame->ebx, frame->ecx
+    , frame->edx, frame->edi, frame->esi, frame->ebp, frame->esp);
+
+    log_print("EIP: %0x%x\nEFLAGS:0x%x\n", frame->eip, frame->eflags);
+
+}
+
 // 这个结构体 作为参数去找栈上面部分的元素 的方法，然后注意 汇编层面 的实现
 static void do_default_handler(exception_frame_t * frame, const char * msg){
     // 模拟 死机 
+    log_print("-------------------------------------------------");
+    log_print("IRQ/Excepiton happend: %s",msg);
+    
+    // 打印 cpu registers 信息
+    dump_core_regs(frame);
+
+    // 利用 log_print 打印 异常信息
     for(;;){
         // 暂停运行 cpu
         hlt();

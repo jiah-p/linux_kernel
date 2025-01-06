@@ -1,8 +1,6 @@
 #ifndef __LOG_H__
 #define __LOG_H__
 
-#include COM1_PORT          0x3F8
-
 // 初始化 日志系统
 void log_init(void);
 
