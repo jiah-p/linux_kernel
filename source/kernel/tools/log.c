@@ -3,6 +3,7 @@
 #include "comm/types.h"
 #include "comm/cpu_instr.h"
 #include "include/tools/klib.h"
+#include "include/cpu/irq.h"
 
 #include COM1_PORT          0x3F8
 
@@ -29,6 +30,9 @@ void log_print(const char * fmt, ...){
     kernel_vsprint(str_buf, fmt, args);
     va_end(args);
     
+    // 关中断 进入临界区
+    irq_state_t state = irq_enter_protection();
+
     const char * p = str_buf;
 
     while(*p != '\0'){
@@ -40,4 +44,6 @@ void log_print(const char * fmt, ...){
     // 自动换行
     outb(COM1_PORT, '\r');          // \r 将 列号归0
     outb(COM1_PORT, '\n');          // \n 行号 + 1
+
+    irq_leave_protection(state);
 }

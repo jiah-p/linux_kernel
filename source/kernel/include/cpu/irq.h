@@ -1,6 +1,8 @@
 #ifndef __IRQ_H__
 #define __IRQ_H__
 
+#include "comm/types.h"
+
 // X86芯片开发 第二章 6.15 部分介绍了 该中断对应的知识
 #define IRQ0_DE         0
 #define IRQ1_DB         1
@@ -95,5 +97,10 @@ void irq_disable_global(void);
 void irq_enable_global(void);
 
 void pic_send_eoi(int irq_num);
+
+typedef uint32_t irq_state_t;
+
+irq_state_t irq_enter_protection(void);
+void irq_leave_protection(irq_state_t state);
 
 #endif

@@ -3,7 +3,7 @@
 #include "include/cpu/irq.h"
 #include "comm/cpu_instr.h"
 #include "include/os_cfg.h"
-
+#include "include/core/task.h"
 
 static uint32_t sys_tick;
 
@@ -12,6 +12,8 @@ void do_handler_time(exception_frame_t * frame){
 
     // 通知 8259 中断处理函数已经完成
     pic_send_eoi(IRQ0_TIMER);
+    // 任务定时器检查
+    task_time_tick();
 }
 
 static void init_pit(void){ 

@@ -2,6 +2,7 @@
 #include "include/cpu/cpu.h"
 #include "include/os_cfg.h"
 #include "include/tools/log.h"
+
 #define IDE_TABLE_NR         128
 
 void exception_handler_unknown(void);
@@ -239,4 +240,17 @@ void pic_send_eoi(int irq_num){
         outb(PIC0_OCW2, PIC_OCW2_EOI);
     }
     
+}
+
+irq_state_t irq_enter_protection(void){
+    // 通过 eflags 位 判断 中断开关
+    irq_state_t state = read_eflags();
+
+    irq_disable_global();
+
+    return state;
+}
+
+void irq_leave_protection(irq_state_t state){
+    write_eflags(state);
 }

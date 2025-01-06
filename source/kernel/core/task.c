@@ -2,6 +2,10 @@
 #include "include/tools/klib.h"
 #include "include/os_cfg.h"
 #include "include/tools/log.h"
+#include "comm/cpu_instr.h"
+#include "include/cpu/irq.h"
+
+static task_mananger_t task_mananger;
 
 static int tss_init(task_t * task, uint32_t entry, uint32_t ){
     int tss_sel = gdt_alloc_desc();
@@ -33,7 +37,16 @@ static int tss_init(task_t * task, uint32_t entry, uint32_t ){
     return 0;
 }
 
-int task_init(task_t * task, uint32_t entry, uint32_t esp){
+void task_set_ready(task_t * task){
+    list_insert_first(&task_mananger.ready_list, &task->run_node);
+    task->state = TASK_READY;
+}
+
+void task_set_block(task_t * task){
+    list_remove(&task_mananger.ready_list, &task->run_node);
+}
+
+int task_init(task_t * task, const char * name, uint32_t entry, uint32_t esp){
     ASSERT(task != (task_t * )0);
 
     tss_init(task, entry, esp);
@@ -47,6 +60,21 @@ int task_init(task_t * task, uint32_t entry, uint32_t esp){
     //     *(--pesp) = 0;
     //     task->stack = pesp;
     // }
+
+    kernel_strncpy(task->name, name, TASK_NAME_SIZE);
+    task->state = TASK_CREATED;
+    task->time_ticks = TASK_TIME_SLICE_DEFAULT;
+    task->slice_ticks = task->time_ticks;
+
+    list_node_init(&task->all_node);
+    list_node_init(&task->run_node);
+
+    irq_state_t state = irq_enter_protection();
+    task_set_ready(task);
+
+    // 插入到 task_list
+    list_insert_last(&task_mananger.task_list, &task->all_node);
+    irq_leave_protection(state);
 
     return 0;
 }
@@ -62,3 +90,81 @@ void task_switch_from_to(task_t * from, task_t * to){
     // simple_switch(from->stack, to->stack);
 }
 
+tast_t * task_first_task(void){
+    return task_mananger.first_task;
+}
+
+void task_first_init(void){
+    task_init(&task_mananger.first_task, "first task",0, 0);
+    write_tr(task_mananger.first_task.tss_sel);
+
+    task_mananger.curr_task = &task_mananger.first_task;
+}
+
+// 任务管理模块初始化
+void task_mananger_init(void){
+    list_init(task_mananger.ready_list);
+    list_init(task_mananger.task_list);
+
+    task_mananger.curr_task = (task_t *)0;
+
+    task_first_init();
+}
+
+task_t * task_current(void){
+    return task_mananger.curr_task;
+}
+
+int sys_sched_yield(void){
+    irq_state_t state = irq_enter_protection();
+
+    if(list_count(&task_mananger.ready_list) > 1){
+        task_t * curr_task = task_current();
+
+        task_set_block(curr_task);
+        task_set_ready(curr_task);
+
+        // 释放 cpu 使用权
+        task_dispatch(0;)
+    }
+
+    irq_leave_protection(state);
+
+    return 0;
+}
+
+task * task_next_run(void){
+    list_node_t * task_node = list_first(&task_mananger.ready_list);
+
+    return list_node_parent(task_node, task_t, run_node);
+}
+
+void task_dispatch(void){
+
+    irq_state_t state = irq_enter_protection();
+
+    // cpu调度策略
+    task_t * to = task_next_run();
+    if(to != task_mananger.curr_task){
+        task_t * from = task_current();
+        from->state = TASK_RUNNING;
+        // 从 当前任务切换到 下一个就绪队列头部的任务，目前是 FIFO 算法
+        task_switch_from_to( from, to)
+    }
+
+    irq_leave_protection(state);
+}   
+
+// 任务定时器  
+void task_time_tick(void){
+    task_t * curr_task = task_current();
+
+    if(-curr_task->slice_ticks == 0){
+        curr_task->slice_ticks = curr_task->time_ticks;
+        
+        task_set_block(curr_task);
+        task_set_ready(curr_task);
+
+        task_dispatch();
+    }
+}

@@ -37,7 +37,7 @@ void kernel_init(boot_info_t * boot_info){
 }
 
 
-static task_t first_task;                   // init_task_entry
+
 static uint32_t init_task_stack[1024];      // init_task_entry 栈空间
 static task_t init_task;
 
@@ -48,16 +48,37 @@ void init_task_entry(void){
     {
         log_print("Int task: %d", count++);
         // 任务切换
-        task_switch_from_to(&init_task, &first_task);
+        // task_switch_from_to(&init_task, task_first_task());
+        // sys_sched_yield();                  // 释放当前cpu资源
     }
-    
 }   
 
 // 链表 test
 void list_test(){
     list_t list;
     list_init(&list);
+
+    // 宏定义 list_node_parent 测试
+    struct type_t
+    {
+        int i;
+        list_node_t node;
+    }v ={0x123456};
+
+    list_node_t * v_node = &v.node;
+
+    struct type_t * a = (struct type_t *)0;         // 平坦模型 直接指针指向 0地址处
+    uint32_t addr = (uint32_t)&a->node;             // int 类型占 4个字节， 所以 addr = 4
+    uint32_t addr_p = offset_in_parent(struct type-t, node);    // 同上
+    // 得到结构体的地址(指针)
+    struct type_t * p = list_node_parent(v_node, struct type_t, node);
+    if(p->i == 0x123456){
+        log_print("transfer correctly.");
+    }else{
+        log_print("transfer error.");
+    }
 }
+
 
 void init_main(){
     
@@ -76,21 +97,23 @@ void init_main(){
     // irq_enable_global();
 
     // task (PCB) 初始化
-    task_init(&init_task, (uint32_t)init_task_entry, (uint32_t)&init_task_stack[1024]);         // 栈 高地址 -> 低地址 所以压入  init_task_stack[1024] 应该是最高位 小端存储 // 而数据永远从低位开始读取
-    task_init(&first_task, (uint32_t)0, (uint32_t)0);
+    task_init(&init_task, "init task", (uint32_t)init_task_entry, (uint32_t)&init_task_stack[1024]);         // 栈 高地址 -> 低地址 所以压入  init_task_stack[1024] 应该是最高位 小端存储 // 而数据永远从低位开始读取
+    task_first_init();
 
     // 更改 tr寄存器
     write_tr(first_task.tss_sel);
 
-
-    
-
+    // 打开全局中断，定时器开始工作
+    irq_enable_global();
     // 任务1 
     int count = 0;
     for(;;){
         log_print("Count: %d", count++);
         // 任务切换 任务2 
-        task_switch_from_to(&first_task, &init_task);
+        // task_switch_from_to(task_first_task(), &init_task);
+
+        // 主动switch -> 主动放弃cpu资源 通过任务管理 由cpu进行调度
+        // sys_sched_yield();
     }
 
 }
