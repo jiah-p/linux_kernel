@@ -6,6 +6,7 @@
 #include "include/tools/log.h"
 #include "include/os_cfg.h"
 #include "tools/klib.h"
+#include "include/core/task.h"
 
 // test
 // int global_var = 0x1234;
@@ -33,6 +34,12 @@ void kernel_init(boot_info_t * boot_info){
     time_init();
 }
 
+
+static task_t first_task;                   // init_task_entry
+static uint32_t init_task_stack[1024];      // init_task_entry 栈空间
+static task_t init_task;
+
+
 void init_task_entry(void){
     int count = 0;
     for (;;)
@@ -57,11 +64,15 @@ void init_main(){
     // irq_enable_global();
 
 
+    // task (PCB) 初始化
+    task_init(&init_task, (uint32_t)init_task_entry, (uint32_t)&init_task_stack[1024]);         // 栈 高地址 -> 低地址 所以压入  init_task_stack[1024] 应该是最高位 小端存储 // 而数据永远从低位开始读取
+    task_init(&first_task, (uint32_t)0, (uint32_t)0);
+
     // 任务1 
     int count = 0;
     for(;;){
         log_print("Count: %d", count++);
+        // 任务切换 任务2 
     }
-    // 任务2 
-    init_task_entry();
 }
+
