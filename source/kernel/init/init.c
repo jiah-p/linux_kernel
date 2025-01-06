@@ -3,10 +3,12 @@
 #include "include/cpu/cpu.h"
 #include "include/cpu/irq.h"
 #include "dev/time.h"
+#include "comm/cpu_instr.h"
 #include "include/tools/log.h"
 #include "include/os_cfg.h"
 #include "tools/klib.h"
 #include "include/core/task.h"
+#include "include/tools/list.h"
 
 // test
 // int global_var = 0x1234;
@@ -45,11 +47,21 @@ void init_task_entry(void){
     for (;;)
     {
         log_print("Int task: %d", count++);
+        // 任务切换
+        task_switch_from_to(&init_task, &first_task);
     }
     
 }   
 
+// 链表 test
+void list_test(){
+    list_t list;
+    list_init(&list);
+}
+
 void init_main(){
+    
+    list_test();
 
     log_print("kernel is already.");
     // 字符串测试
@@ -63,16 +75,23 @@ void init_main(){
     // 打开全局中断，开中断
     // irq_enable_global();
 
-
     // task (PCB) 初始化
     task_init(&init_task, (uint32_t)init_task_entry, (uint32_t)&init_task_stack[1024]);         // 栈 高地址 -> 低地址 所以压入  init_task_stack[1024] 应该是最高位 小端存储 // 而数据永远从低位开始读取
     task_init(&first_task, (uint32_t)0, (uint32_t)0);
+
+    // 更改 tr寄存器
+    write_tr(first_task.tss_sel);
+
+
+    
 
     // 任务1 
     int count = 0;
     for(;;){
         log_print("Count: %d", count++);
         // 任务切换 任务2 
+        task_switch_from_to(&first_task, &init_task);
     }
+
 }
 

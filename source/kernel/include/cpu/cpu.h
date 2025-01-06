@@ -16,6 +16,7 @@ typedef struct _segment_desc_t
     uint8_t base31_24;
 }segment_desc_t;
 
+
 typedef struct _gate_desc_t
 {
     uint16_t offset15_0;
@@ -56,6 +57,7 @@ typedef struct _tss_t
 
 #define SEG_TYPE_CODE   (1 << 3);
 #define SEG_TYPE_DATA   (0 << 3);
+#define SEG_TYPE_TSS    (9 << 0);
 
 #define SEG_TYPE_RW     (1 << 1)
 
@@ -68,5 +70,9 @@ void init_gdt(void);
 void cpu_init(void);
 
 void init_idt(void);
+
+int gdt_alloc_desc(void);
+
+void switch_to_tss(int);
 
 #endif

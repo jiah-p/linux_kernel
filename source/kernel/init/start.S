@@ -105,4 +105,25 @@ exception_handler control_exception, 21, 1
 exception_handler time, 0x20, 0
 
 
+    ; simple_switch(&from->stack, &to->stack)
+    .text
+    .global simple_switch
+simple_switch:
+    mov  4(%esp), %eax      ; from->stack 
+    mov  8(%esp), %edx      ; to->stack 指针
 
+    push %ebp
+    push %ebx
+    push %esi
+    push %edi
+    push 
+; 切换 任务栈
+    mov %edx, (%eax)
+    mov %edx, %esp
+    
+    pop %edi
+    pop %esi
+    pop %ebx
+    pop %ebp
+
+    ret

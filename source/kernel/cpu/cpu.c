@@ -54,3 +54,20 @@ void init_idt(void){
 void cpu_init(void){
     init_gdt();
 }
+
+
+int gdt_alloc_desc(void){
+    for (int i = 1; i < GDT_TABLE_SIZE; i++)
+    {
+        segment_desc_t * desc = gdt_table + i;
+        if(desc->attr == 0){                    // 空闲项
+            return i * sizeof(segment_desc_t);
+        }
+    }
+    
+    return -1;
+}
+
+void switch_to_tss(int tss_sel){
+    far_jump(tss_sel, 0);                       // 不需要设置 偏移量
+}
