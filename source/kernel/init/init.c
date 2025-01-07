@@ -50,6 +50,7 @@ void init_task_entry(void){
         // 任务切换
         // task_switch_from_to(&init_task, task_first_task());
         // sys_sched_yield();                  // 释放当前cpu资源
+        sys_sleep(1000);            // 延时 1 s
     }
 }   
 
@@ -114,7 +115,11 @@ void init_main(){
 
         // 主动switch -> 主动放弃cpu资源 通过任务管理 由cpu进行调度
         // sys_sched_yield();
+
+        // 设计延时
+        sys_sleep(1000);
     }
+
 
 }
 

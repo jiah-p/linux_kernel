@@ -5,9 +5,12 @@
 #include "comm/cpu_instr.h"
 #include "include/cpu/irq.h"
 
+
 static task_mananger_t task_mananger;
 
-static int tss_init(task_t * task, uint32_t entry, uint32_t ){
+static uint32_t idle_task_stack[IDLE_TASK_SIZE];          // 空闲进程栈空间
+
+static int tss_init(task_t * task, uint32_t entry, uint32_t esp){
     int tss_sel = gdt_alloc_desc();
     if(tss_sel == -1){
         log_print("alloc tss failded.");
@@ -38,11 +41,13 @@ static int tss_init(task_t * task, uint32_t entry, uint32_t ){
 }
 
 void task_set_ready(task_t * task){
+    if(task == &task_mananger.idle_task) return;
     list_insert_first(&task_mananger.ready_list, &task->run_node);
     task->state = TASK_READY;
 }
 
 void task_set_block(task_t * task){
+    if(task == &task_mananger.idle_task) return;
     list_remove(&task_mananger.ready_list, &task->run_node);
 }
 
@@ -64,10 +69,12 @@ int task_init(task_t * task, const char * name, uint32_t entry, uint32_t esp){
     kernel_strncpy(task->name, name, TASK_NAME_SIZE);
     task->state = TASK_CREATED;
     task->time_ticks = TASK_TIME_SLICE_DEFAULT;
+    task->sleep_ticks = 0;
     task->slice_ticks = task->time_ticks;
 
     list_node_init(&task->all_node);
     list_node_init(&task->run_node);
+    list_node_init(&task->wait_node);
 
     irq_state_t state = irq_enter_protection();
     task_set_ready(task);
@@ -105,8 +112,10 @@ void task_first_init(void){
 void task_mananger_init(void){
     list_init(task_mananger.ready_list);
     list_init(task_mananger.task_list);
+    list_init(task_mananger.sleep_list);
 
     task_mananger.curr_task = (task_t *)0;
+    task_init(&task_mananger.idle_task, "idle task", (uint32_t)idle_task_entry, uint32_t(idle_task_stack + IDLE_TASK_SIZE))
 
     task_first_init();
 }
@@ -134,10 +143,22 @@ int sys_sched_yield(void){
 }
 
 task * task_next_run(void){
+    // 当空闲队列为空的时候  返回空闲进程
+    if(list_count(&task_mananger.ready_list) == 0){
+        return &task_mananger.idle_task;
+    }
+
     list_node_t * task_node = list_first(&task_mananger.ready_list);
 
     return list_node_parent(task_node, task_t, run_node);
 }
+
+static void idle_task_entry(void){
+    for(;;){
+        hlt();
+    }
+}
+
 
 void task_dispatch(void){
 
@@ -164,7 +185,46 @@ void task_time_tick(void){
         
         task_set_block(curr_task);
         task_set_ready(curr_task);
-
+        
         task_dispatch();
     }
+
+    list_node_t  * curr = list_first(&task_mananger.sleep_list);
+    while(curr){
+        list_node_t * next = list_node_next(curr);
+
+        task_t * task = list_node_parent(curr, task_t, run_node);
+        if(--task->sleep_ticks == 0){
+            task_set_wakeup(task);
+            task_set_ready(task);
+        }
+
+        curr = next;
+    }
+
+    task_dispatch();
 }
+
+void task_set_sleep(task_t * task, uint32_t ticks){
+    if(ticks <= 0 ) return;
+
+    task->sleep_ticks = ticks;
+    task->state = TASK_SLEEP;
+
+    list_insert_last(&task_mananger.sleep_list, task->run_node);
+}
+
+void task_set_wakeup(task_t * task){
+    list_remove(task_mananger.sleep_list, task->run_node);
+}
+
+void sys_sleep(uint32_t ms){
+    irq_state_t state = irq_enter_protection();
+
+    task_set_block(task_mananger.curr_task);
+    task_set_sleep(task_mananger.curr_task, (ms + (OS_TICKS_MS - 1))  / OS_TICKS_MS );              //向上取整
+    // 任务切换
+    task_dispatch();
+
+    irq_leave_protection(state);
+}   
