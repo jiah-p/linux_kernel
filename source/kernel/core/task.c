@@ -120,6 +120,7 @@ void task_mananger_init(void){
     task_first_init();
 }
 
+// 获取当前进程
 task_t * task_current(void){
     return task_mananger.curr_task;
 }

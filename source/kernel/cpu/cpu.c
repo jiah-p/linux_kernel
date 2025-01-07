@@ -2,8 +2,10 @@
 #include "comm/cpu_instr.h"
 #include "include/os_cfg.h"
 #include "include/cpu/irq.h"
+#include "include/ipc/mutex.h"
 
 static segment_desc_t gdt_table[GDT_TABLE_SIZE];
+static mutex_t mutex;
 
 // 输入：选择子（相对于 GDT 表的字节偏移量）、基地址、界限、属性 -> 进行设置
 void segment_desc_set(int selector, uint32_t base, uint32_t limit, uint16_t attr){
@@ -54,23 +56,24 @@ void init_idt(void){
 
 
 void cpu_init(void){
+    mutex_init(&mutex);
     init_gdt();
 }
 
 
 int gdt_alloc_desc(void){
-    irq_state_t state = irq_enter_protection();
+    mutex_lock(&mutex);
 
     for (int i = 1; i < GDT_TABLE_SIZE; i++)
     {
         segment_desc_t * desc = gdt_table + i;
         if(desc->attr == 0){                    // 空闲项
-            irq_leave_protection(state);
+            mutex_unlock(&mutex);
             return i * sizeof(segment_desc_t);
         }
     }
     
-    irq_leave_protection(state);
+    mutex_unlock(&mutex);
     
     return -1;
 }

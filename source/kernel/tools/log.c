@@ -4,10 +4,15 @@
 #include "comm/cpu_instr.h"
 #include "include/tools/klib.h"
 #include "include/cpu/irq.h"
+#include "include/ipc/mutex.h"
+
+static mutex_t mutex;
 
 #include COM1_PORT          0x3F8
 
 void log_init(void){
+    // 初始化 ipc 互斥锁
+    mutex_init(&mutex);
 
     // 初始化 串行接口 serial0 
     outb(COM1_PORT + 1, 0x00);      // 关 串行接口 中断
@@ -31,7 +36,7 @@ void log_print(const char * fmt, ...){
     va_end(args);
     
     // 关中断 进入临界区
-    irq_state_t state = irq_enter_protection();
+    mutex_lock(&mutex);
 
     const char * p = str_buf;
 
@@ -45,5 +50,5 @@ void log_print(const char * fmt, ...){
     outb(COM1_PORT, '\r');          // \r 将 列号归0
     outb(COM1_PORT, '\n');          // \n 行号 + 1
 
-    irq_leave_protection(state);
+    mutex_unlock(&mutex);
 }

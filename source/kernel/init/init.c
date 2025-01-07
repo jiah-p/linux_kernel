@@ -9,6 +9,8 @@
 #include "tools/klib.h"
 #include "include/core/task.h"
 #include "include/tools/list.h"
+#include "include/ipc/sem.h"
+#include "include/ipc/mutex.h"
 
 // test
 // int global_var = 0x1234;
@@ -40,17 +42,23 @@ void kernel_init(boot_info_t * boot_info){
 
 static uint32_t init_task_stack[1024];      // init_task_entry 栈空间
 static task_t init_task;
-
+static sem_t sem;                           // 全局信号量
 
 void init_task_entry(void){
     int count = 0;
     for (;;)
     {
+        sem_wait(&sem);                     // 信号量同步
         log_print("Int task: %d", count++);
         // 任务切换
         // task_switch_from_to(&init_task, task_first_task());
-        // sys_sched_yield();                  // 释放当前cpu资源
-        sys_sleep(1000);            // 延时 1 s
+
+        // sys_sched_yield();              // 释放当前cpu资源
+
+        // sys_sleep(1000);                // 延时 1 s
+
+        // 通过信号量进行进程间通信的测试
+
     }
 }   
 
@@ -104,6 +112,9 @@ void init_main(){
     // 更改 tr寄存器
     write_tr(first_task.tss_sel);
 
+    // 全局信号量初始化
+    sem_init(&sem, 0);
+
     // 打开全局中断，定时器开始工作
     irq_enable_global();
     // 任务1 
@@ -116,10 +127,11 @@ void init_main(){
         // 主动switch -> 主动放弃cpu资源 通过任务管理 由cpu进行调度
         // sys_sched_yield();
 
+        // 信号量发送
+        sem_notify(&sem);
+
         // 设计延时
         sys_sleep(1000);
     }
-
-
 }
 
