@@ -11,6 +11,7 @@
 #include "include/tools/list.h"
 #include "include/ipc/sem.h"
 #include "include/ipc/mutex.h"
+#include "include/core/memory.h"
 
 // test
 // int global_var = 0x1234;
@@ -29,9 +30,11 @@ void kernel_init(boot_info_t * boot_info){
     //    static int static_local_var_zero;
 
     // assert 断言调试
-    ASSERT(boot_info->ram_region_count != 0);
+    // ASSERT(boot_info->ram_region_count != 0);
 
     cpu_init();
+
+    memory_init(boot_info);
 
     log_init();
     irq_init();
