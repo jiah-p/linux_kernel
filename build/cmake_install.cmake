@@ -41,6 +41,7 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
   include("C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/boot/cmake_install.cmake")
   include("C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/loader/cmake_install.cmake")
+  include("C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/kernel/cmake_install.cmake")
 
 endif()
 

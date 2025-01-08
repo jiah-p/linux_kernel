@@ -1,9 +1,9 @@
-#include "include/core/task.h"
-#include "include/tools/klib.h"
-#include "include/os_cfg.h"
-#include "include/tools/log.h"
+#include "core/task.h"
+#include "tools/klib.h"
+#include "os_cfg.h"
+#include "tools/log.h"
 #include "comm/cpu_instr.h"
-#include "include/cpu/irq.h"
+#include "cpu/irq.h"
 
 
 static task_mananger_t task_mananger;
@@ -97,8 +97,8 @@ void task_switch_from_to(task_t * from, task_t * to){
     // simple_switch(from->stack, to->stack);
 }
 
-tast_t * task_first_task(void){
-    return task_mananger.first_task;
+task_t * task_first_task(void){
+    return &task_mananger.first_task;
 }
 
 void task_first_init(void){
@@ -108,21 +108,28 @@ void task_first_init(void){
     task_mananger.curr_task = &task_mananger.first_task;
 }
 
+static void idle_task_entry(void){
+    for(;;){
+        hlt();
+    }
+}
+
+
 // 任务管理模块初始化
 void task_mananger_init(void){
-    list_init(task_mananger.ready_list);
-    list_init(task_mananger.task_list);
-    list_init(task_mananger.sleep_list);
+    list_init(&task_mananger.ready_list);
+    list_init(&task_mananger.task_list);
+    list_init(&task_mananger.sleep_list);
 
     task_mananger.curr_task = (task_t *)0;
-    task_init(&task_mananger.idle_task, "idle task", (uint32_t)idle_task_entry, uint32_t(idle_task_stack + IDLE_TASK_SIZE))
+    task_init(&task_mananger.idle_task, "idle task", (uint32_t)idle_task_entry, (uint32_t)(idle_task_stack + IDLE_TASK_SIZE));
 
     task_first_init();
 }
 
 // 获取当前进程
 task_t * task_current(void){
-    return task_mananger.curr_task;
+    return &task_mananger.curr_task;
 }
 
 int sys_sched_yield(void){
@@ -135,7 +142,7 @@ int sys_sched_yield(void){
         task_set_ready(curr_task);
 
         // 释放 cpu 使用权
-        task_dispatch(0;)
+        task_dispatch();
     }
 
     irq_leave_protection(state);
@@ -143,7 +150,7 @@ int sys_sched_yield(void){
     return 0;
 }
 
-task * task_next_run(void){
+task_t * task_next_run(void){
     // 当空闲队列为空的时候  返回空闲进程
     if(list_count(&task_mananger.ready_list) == 0){
         return &task_mananger.idle_task;
@@ -154,11 +161,6 @@ task * task_next_run(void){
     return list_node_parent(task_node, task_t, run_node);
 }
 
-static void idle_task_entry(void){
-    for(;;){
-        hlt();
-    }
-}
 
 
 void task_dispatch(void){
@@ -171,7 +173,7 @@ void task_dispatch(void){
         task_t * from = task_current();
         from->state = TASK_RUNNING;
         // 从 当前任务切换到 下一个就绪队列头部的任务，目前是 FIFO 算法
-        task_switch_from_to( from, to)
+        task_switch_from_to(from, to);
     }
 
     irq_leave_protection(state);
@@ -212,11 +214,11 @@ void task_set_sleep(task_t * task, uint32_t ticks){
     task->sleep_ticks = ticks;
     task->state = TASK_SLEEP;
 
-    list_insert_last(&task_mananger.sleep_list, task->run_node);
+    list_insert_last(&task_mananger.sleep_list, &task->run_node);
 }
 
 void task_set_wakeup(task_t * task){
-    list_remove(task_mananger.sleep_list, task->run_node);
+    list_remove(&task_mananger.sleep_list, &task->run_node);
 }
 
 void sys_sleep(uint32_t ms){

@@ -27,9 +27,6 @@
 
 .SUFFIXES: .hpux_make_needs_suffix_list
 
-# Produce verbose output by default.
-VERBOSE = 1
-
 # Command-line flag to silence nested $(MAKE).
 $(VERBOSE)MAKESILENT = -s
 
@@ -116,7 +113,7 @@ source/boot/boot.exe: source/boot/CMakeFiles/boot.dir/linklibs.rsp
 source/boot/boot.exe: source/boot/CMakeFiles/boot.dir/objects1.rsp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking C executable boot.exe"
 	cd C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/boot && x86_64-elf-ld @CMakeFiles/boot.dir/objects1.rsp -m elf_i386  -Ttext=0x7c00  --section-start boot_end=0x7dfe -o C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/boot/boot.elf
-	cd C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/boot && x86_64-elf-objcopy -O binary boot.elf C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/../../image/boot.bin
+	cd C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/boot && x86_64-elf-objcopy -O binary boot.elf C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/../../image/boot.elf
 	cd C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/boot && x86_64-elf-objdump -x -d -S -m i8086 C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/boot/boot.elf > boot_dis.txt
 	cd C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/boot && x86_64-elf-readelf -a C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/boot/boot.elf > boot_elf.txt
 

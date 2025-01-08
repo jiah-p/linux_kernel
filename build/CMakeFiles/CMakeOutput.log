@@ -15,15 +15,15 @@ The C compiler identification is GNU, found in "C:/Users/11580/Desktop/LinuxCore
 Determining if the C compiler works passed with the following output:
 Change Dir: C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/CMakeFiles/CMakeTmp
 
-Run Build Command(s):C:/x86_64-elf-tools-windows/bin/make.exe -f Makefile cmTC_6a0fe/fast && C:/x86_64-elf-tools-windows/bin/make.exe  -f CMakeFiles/cmTC_6a0fe.dir/build.make CMakeFiles/cmTC_6a0fe.dir/build
+Run Build Command(s):C:/x86_64-elf-tools-windows/bin/make.exe -f Makefile cmTC_97c31/fast && C:/x86_64-elf-tools-windows/bin/make.exe  -f CMakeFiles/cmTC_97c31.dir/build.make CMakeFiles/cmTC_97c31.dir/build
 make[1]: Entering directory 'C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_6a0fe.dir/testCCompiler.c.obj
-C:/x86_64-elf-tools-windows/bin/x86_64-elf-gcc.exe   -g -c -O0 -m32 -fno-pie -fno-stack-protector -fno-asynchronous-unwind-tables  -o CMakeFiles/cmTC_6a0fe.dir/testCCompiler.c.obj -c C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/CMakeFiles/CMakeTmp/testCCompiler.c
-Linking C executable cmTC_6a0fe.exe
-"C:/Program Files (x86)/CMake/bin/cmake.exe" -E rm -f CMakeFiles/cmTC_6a0fe.dir/objects.a
-C:/x86_64-elf-tools-windows/bin/x86_64-elf-ar.exe qc CMakeFiles/cmTC_6a0fe.dir/objects.a @CMakeFiles/cmTC_6a0fe.dir/objects1.rsp
-C:/x86_64-elf-tools-windows/bin/x86_64-elf-gcc.exe -g -c -O0 -m32 -fno-pie -fno-stack-protector -fno-asynchronous-unwind-tables  -Wl,--whole-archive CMakeFiles/cmTC_6a0fe.dir/objects.a -Wl,--no-whole-archive -o cmTC_6a0fe.exe -Wl,--out-implib,libcmTC_6a0fe.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles/cmTC_6a0fe.dir/linklibs.rsp
-x86_64-elf-gcc.exe: warning: CMakeFiles/cmTC_6a0fe.dir/objects.a: linker input file unused because linking not done
+Building C object CMakeFiles/cmTC_97c31.dir/testCCompiler.c.obj
+C:/x86_64-elf-tools-windows/bin/x86_64-elf-gcc.exe   -g -c -O0 -m32 -fno-pie -fno-stack-protector -fno-asynchronous-unwind-tables  -o CMakeFiles/cmTC_97c31.dir/testCCompiler.c.obj -c C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/CMakeFiles/CMakeTmp/testCCompiler.c
+Linking C executable cmTC_97c31.exe
+"C:/Program Files (x86)/CMake/bin/cmake.exe" -E rm -f CMakeFiles/cmTC_97c31.dir/objects.a
+C:/x86_64-elf-tools-windows/bin/x86_64-elf-ar.exe qc CMakeFiles/cmTC_97c31.dir/objects.a @CMakeFiles/cmTC_97c31.dir/objects1.rsp
+C:/x86_64-elf-tools-windows/bin/x86_64-elf-gcc.exe -g -c -O0 -m32 -fno-pie -fno-stack-protector -fno-asynchronous-unwind-tables  -Wl,--whole-archive CMakeFiles/cmTC_97c31.dir/objects.a -Wl,--no-whole-archive -o cmTC_97c31.exe -Wl,--out-implib,libcmTC_97c31.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles/cmTC_97c31.dir/linklibs.rsp
+x86_64-elf-gcc.exe: warning: CMakeFiles/cmTC_97c31.dir/objects.a: linker input file unused because linking not done
 make[1]: Leaving directory 'C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/CMakeFiles/CMakeTmp'
 
 

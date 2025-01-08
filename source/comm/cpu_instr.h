@@ -68,7 +68,7 @@ static inline uint32_t read_cr0(){
     uint32_t cr0;
 
     __asm__ __volatile(
-        "mov %cr0, %[v]"
+        "mov %%cr0, %[v]"
         :[v]"=r"(cr0)
     ); 
 
@@ -77,7 +77,7 @@ static inline uint32_t read_cr0(){
 
 static inline void write_cr0(uint32_t v){
     __asm__ __volatile(
-        "mov %[v], %cr0"
+        "mov %[v], %%cr0"
         ::[v]"r"(v)
     ); 
 }
@@ -129,6 +129,43 @@ static inline uint32_t read_eflags(void){
 // 写入 中断状态 eflags 寄存器
 static inline void write_eflags(uint32_t eflags){
     __asm__ __volatile__("push %%eax\n\tpop"::"a"(eflags));
+}
+
+// cr3 cr4 -> 设置 虚拟内存功能
+static inline uint32_t read_cr3(){
+    uint32_t cr3;
+
+    __asm__ __volatile(
+        "mov %%cr3, %[v]"
+        :[v]"=r"(cr3)
+    ); 
+
+    return cr3;
+}
+
+static inline void write_cr3(uint32_t v){
+    __asm__ __volatile(
+        "mov %[v], %%cr3"
+        ::[v]"r"(v)
+    ); 
+}
+
+static inline uint32_t read_cr4(){
+    uint32_t cr4;
+
+    __asm__ __volatile(
+        "mov %%cr4, %[v]"
+        :[v]"=r"(cr4)
+    ); 
+
+    return cr4;
+}
+
+static inline void write_cr4(uint32_t v){
+    __asm__ __volatile(
+        "mov %[v], %%cr4"
+        ::[v]"r"(v)
+    ); 
 }
 
 #endif

@@ -1,5 +1,7 @@
 
-#ifndef BOOT_H
-#define BOOT_H
+#ifndef __BOOT_H__
+#define __BOOT_H__
+
+
 
 #endif

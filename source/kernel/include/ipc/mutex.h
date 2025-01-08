@@ -1,8 +1,8 @@
 #ifndef __MUTEX_H__
 #define __MUTEX_H__
 
-#include "include/tools/list.h"
-#include "include/core/task.h"
+#include "tools/list.h"
+#include "core/task.h"
 
 typedef struct _mutex_t
 {

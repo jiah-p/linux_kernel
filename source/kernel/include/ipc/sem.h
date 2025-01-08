@@ -2,7 +2,7 @@
 #define __SEM_H__
 
 #include "comm/types.h"
-#include "include/tools/list.h"
+#include "tools/list.h"
 
 // 进程同步： 信号量 锁 
 typedef struct _sem_t{

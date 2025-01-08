@@ -1,8 +1,8 @@
-#include "include/cpu/cpu.h"
+#include "cpu/cpu.h"
 #include "comm/cpu_instr.h"
-#include "include/os_cfg.h"
-#include "include/cpu/irq.h"
-#include "include/ipc/mutex.h"
+#include "os_cfg.h"
+#include "cpu/irq.h"
+#include "ipc/mutex.h"
 
 static segment_desc_t gdt_table[GDT_TABLE_SIZE];
 static mutex_t mutex;

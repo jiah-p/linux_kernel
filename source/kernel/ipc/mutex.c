@@ -1,4 +1,4 @@
-#include "include/ipc/mutex.h"
+#include "ipc/mutex.h"
 #include "comm/cpu_instr.h"
 #include "cpu/irq.h"
 
@@ -6,7 +6,7 @@ void mutex_init(mutex_t *  mutex){
     mutex->owner = (task_t *)0;
     mutex->locker_count = 0;
 
-    list_init(&mutex->locker);
+    list_init(&mutex->wait_list);
 }
 
 // 加锁

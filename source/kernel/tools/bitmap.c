@@ -1,5 +1,5 @@
-#include "include/tools/bitmap.h"
-#include "include/tools/klib.h"
+#include "tools/bitmap.h"
+#include "tools/klib.h"
 
 int bitmap_byte_count(int bit_count){
     return (bit_count + 8 - 1) / 8;             // 向上取整

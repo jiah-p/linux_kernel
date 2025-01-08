@@ -1,4 +1,4 @@
-#include  "include/os_cfg.h"
+#include  "os_cfg.h"
     .text
     .extern kernel_init
     .global _start 

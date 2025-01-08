@@ -1,14 +1,14 @@
-#include "include/tools/log.h"
-#include "include/os_cfg.h"
+#include "tools/log.h"
+#include "os_cfg.h"
 #include "comm/types.h"
 #include "comm/cpu_instr.h"
-#include "include/tools/klib.h"
-#include "include/cpu/irq.h"
-#include "include/ipc/mutex.h"
+#include "tools/klib.h"
+#include "cpu/irq.h"
+#include "ipc/mutex.h"
 
 static mutex_t mutex;
 
-#include COM1_PORT          0x3F8
+#define COM1_PORT          0x3F8
 
 void log_init(void){
     // 初始化 ipc 互斥锁

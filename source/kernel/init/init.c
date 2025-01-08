@@ -1,17 +1,17 @@
 #include "init.h"
 #include "comm/boot_info.h"
-#include "include/cpu/cpu.h"
-#include "include/cpu/irq.h"
+#include "cpu/cpu.h"
+#include "cpu/irq.h"
 #include "dev/time.h"
 #include "comm/cpu_instr.h"
-#include "include/tools/log.h"
-#include "include/os_cfg.h"
+#include "tools/log.h"
+#include "os_cfg.h"
 #include "tools/klib.h"
-#include "include/core/task.h"
-#include "include/tools/list.h"
-#include "include/ipc/sem.h"
-#include "include/ipc/mutex.h"
-#include "include/core/memory.h"
+#include "core/task.h"
+#include "tools/list.h"
+#include "ipc/sem.h"
+#include "ipc/mutex.h"
+#include "core/memory.h"
 
 // test
 // int global_var = 0x1234;
@@ -81,7 +81,7 @@ void list_test(){
 
     struct type_t * a = (struct type_t *)0;         // 平坦模型 直接指针指向 0地址处
     uint32_t addr = (uint32_t)&a->node;             // int 类型占 4个字节， 所以 addr = 4
-    uint32_t addr_p = offset_in_parent(struct type-t, node);    // 同上
+    uint32_t addr_p = offset_in_parent(struct type_t, node);    // 同上
     // 得到结构体的地址(指针)
     struct type_t * p = list_node_parent(v_node, struct type_t, node);
     if(p->i == 0x123456){
@@ -100,7 +100,7 @@ void init_main(){
     // 字符串测试
     log_print("Vers on: %s", OS_VERSION);
     // 整数测试
-    log_print("%d %d %x %c", -123, 345, 0x12ff, 'a')
+    log_print("%d %d %x %c", -123, 345, 0x12ff, 'a');
 
     // 除 0 异常测试
     int  i = 3 / 0;
@@ -113,7 +113,7 @@ void init_main(){
     task_first_init();
 
     // 更改 tr寄存器
-    write_tr(first_task.tss_sel);
+    // write_tr(first_task.tss_sel);
 
     // 全局信号量初始化
     sem_init(&sem, 0);

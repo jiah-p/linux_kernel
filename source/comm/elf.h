@@ -8,8 +8,6 @@ typedef uint16_t Elf32_Half;
 typedef uint32_t Elf32_Off;
 typedef uint32_t Elf32_Word;
 
-typedef uint8_t char;
-typedef uint16_t short;
 
 #define EI_NIDENT 16
 #define PT_LOAD 1

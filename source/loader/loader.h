@@ -17,7 +17,7 @@ typedef struct SMAP_entry{
     uint32_t LengthH;
     uint32_t Type;       // entry Type，值为1时表明为我们可用的RAM空间
     uint32_t ACPI;       // extended, bit0=0时表明此条目应当被忽略
-}attribute((packed))SMAP_entry_t;
+}__attribute__((packed))SMAP_entry_t;
 
 extern boot_info_t boot_info;
 

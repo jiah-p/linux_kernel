@@ -1,5 +1,5 @@
-#include "include/tools/klib.h"
-#include "include\tools\log.h"
+#include "tools/klib.h"
+#include "tools/log.h"
 #include "comm/cpu_instr.h"
 
 // 拷贝字符串 末尾置 \0
@@ -109,7 +109,7 @@ void kernel_itoa(char * buf, int num, int base){
     char * p = buf;
     int old_num = num;
     if((base != 2) && (base != 8) && (base != 10) && (base != 16)){
-        *P = '\0';
+        *p = '\0';
         return;
     }
 
@@ -137,11 +137,11 @@ void kernel_itoa(char * buf, int num, int base){
 
 }
 
-void kernel_sprint(char * buf, const char * fmt, ...){、
+void kernel_sprint(char * buf, const char * fmt, ...){
     va_list args;
 
     va_start(args, fmt);       
-    kernel_vsprint(str_buf, fmt, args);
+    kernel_vsprint(buf, fmt, args);
     va_end(args);
 }
 
@@ -151,7 +151,7 @@ void kernel_vsprint(char * buf, const char * fmt, va_list args){
     // 定义状态机
     enum{NORMAL, READ_FMT} state = NORMAL;
 
-    const char * curr = buf;
+    char * curr = buf;
 
     char ch;
 
@@ -162,7 +162,7 @@ void kernel_vsprint(char * buf, const char * fmt, va_list args){
             if(ch == '%'){
                 state = READ_FMT;
             }else{
-                 *curr++ = ch;
+                *curr++ = ch;
             }
             break;
         case READ_FMT:

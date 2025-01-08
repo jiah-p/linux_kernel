@@ -1,9 +1,9 @@
-#include "include/dev/time.h"
+#include "dev/time.h"
 #include "comm/types.h"
-#include "include/cpu/irq.h"
+#include "cpu/irq.h"
 #include "comm/cpu_instr.h"
-#include "include/os_cfg.h"
-#include "include/core/task.h"
+#include "os_cfg.h"
+#include "core/task.h"
 
 static uint32_t sys_tick;
 

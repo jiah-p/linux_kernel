@@ -3,7 +3,7 @@
 
 #include "cpu/cpu.h"
 #include "comm/types.h"
-#include "include/tools/list.h"
+#include "tools/list.h"
 
 #define TASK_NAME_SIZE                  32
 #define TASK_TIME_SLICE_DEFAULT         10
@@ -55,7 +55,7 @@ typedef struct _task_mananger_t{
 
 void task_mananger_init(void);
 void task_first_init(void);
-tast_t * task_first_task(void);
+task_t * task_first_task(void);
 
 void task_set_ready(task_t * task);
 void task_set_block(task_t * task);
@@ -63,8 +63,8 @@ void task_set_block(task_t * task);
 // 进程 主动释放 cpu 资源
 int sys_sched_yield(void);
 
-task * task_next_run(void);
-task * task_current(void);
+task_t * task_next_run(void);
+task_t * task_current(void);
 void task_dispatch(void);
 
 void task_set_sleep(task_t * task, uint32_t ticks);     //. 将任务插入到延时队列并设置延时时长

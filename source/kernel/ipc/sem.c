@@ -1,12 +1,12 @@
-#include "include/ipc/sem.h"
-#include "include/core/task.h"
-#include "include/cpu/irq.h"
+#include "ipc/sem.h"
+#include "core/task.h"
+#include "cpu/irq.h"
 
 void sem_init(sem_t * sem, int init_count){
     if(init_count < 0) return;
     sem->count = init_count;
 
-    list_init(sem->wait_list);
+    list_init(&sem->wait_list);
 }
 
 // 编程模式：信号量结构体（信号量，该信号的等待队列）
@@ -38,7 +38,7 @@ void sem_notify(sem_t * sem){
     irq_state_t state = irq_enter_protection();
     // 如果有等待队列则安排 任务 进入 就绪 队列，并更改信号量
     if(list_count(&sem->wait_list)){
-        list_node_t * node = list_remove_first();
+        list_node_t * node = list_remove_first(&sem->wait_list);
         task_t * task = list_node_parent(node, task_t, wait_node);
         task_set_ready(task);
 

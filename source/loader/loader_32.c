@@ -19,7 +19,7 @@ static void read_disk(uint32_t sector, uint32_t sector_count, uint8_t * buffer){
 
     outb(0x1F7, 0x24);
 
-    uint16_t * data_buf = (uint16_t *)buf;
+    uint16_t * data_buf = (uint16_t *)buffer;
     while(sector_count--){
         while((inb(0x1F7) & 0x88) != 0x8);
         // 读取数据
@@ -69,6 +69,34 @@ static void dile(int code){
     for(;;){}
 }
 
+// 页目录表表项
+#define PDE_W                   (1 << 1)
+#define PDE_PS                  (1 << 7)
+#define PDE_P                   (1 << 0)
+#define PDE31_22                (0x3FF << 22)
+
+#define CR0_PG                  (1 << 31)
+#define CR4_PSE                 (1 << 4)
+
+// vol3 4.3 manual 参考   打开分页机制
+void enable_page_mode(void){
+    // 一级页表
+    static uint32_t page_dir[1024] __attribute__((aligned(4096)))  = {
+        [0] = PDE_P | PDE_W | PDE_PS | (0 & PDE31_22)
+    };             // 高10位索引，低22位 表示 偏移 4M 
+
+    // 设置 cr3 cr4 打开 页面机制
+    uint32_t cr4 = read_cr4();
+    write_cr4(cr4 | CR4_PSE);
+    
+    write_cr3((uint32_t)page_dir);
+
+    // 开启分页机制
+    uint32_t cr0 = read_cr0();
+
+    write_cr0(cr0 | CR0_PG);
+}
+
 void load_kernel(void){
     read_disk(100, 500, (uint8_t *)SYS_KERNEL_LOAD_ADDR);
     // 加载 ELF 文件
@@ -77,7 +105,9 @@ void load_kernel(void){
         dile(-1); 
     }
 
-    ((void (*)(_boot_info_t * ))kernel_entry)(&boot);
+    enable_page_mode();
+
+    ((void (*)(boot_info_t *))kernel_entry)(&boot_info);
 
 
     for(;;){}

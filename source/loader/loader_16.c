@@ -5,17 +5,18 @@ __asm__(".code16gcc");  // 指示 编译器 16位进行编译
 boot_info_t boot_info;
 
 static void show_msg(const char * msg){
+    char c;
     // 内联汇编
     while((c = *msg++) != '\0'){
         __asm__ __volatile__(
             "mov $0xe, %%ah\n\t"
 	        "mov %[ch], %%al\n\t"
-	        "int $0x10")::[ch]"r"(c);  // 输入操作数，并指定映射关系
+	        "int $0x10"::[ch]"r"(c));  // 输入操作数，并指定映射关系
     }
 }
 
 static void detect_memory(void){
-    uint32_t coutID = 0;
+    uint32_t contID = 0;
     uint32_t signature,bytes;
     SMAP_entry_t smap_entry;
 
@@ -40,7 +41,7 @@ static void detect_memory(void){
         }
 
         // ram 由部分区域被其他 BIOS空间占了
-        if(entry->TYPE == 1){
+        if(entry->Type == 1){
             // 都只用 Low 32位
             boot_info.ram_region_cfg[boot_info.ram_region_count].start = entry->BaseL;
             boot_info.ram_region_cfg[boot_info.ram_region_count].size = entry->LengthL;
@@ -60,6 +61,7 @@ uint16_t gdt_table[][4] = {
     {0xFFFF,0x0000,0x9200,0x00cf}
 };
 
+
 // 进入保护模式
 static void entry_protect_mode(void){
     cli();
@@ -70,7 +72,7 @@ static void entry_protect_mode(void){
     lgdt((uint32_t)gdt_table, sizeof(gdt_table));
 
     // 读取cr0 并重新写入   
-    uint32_t cr0 = read_cr0()
+    uint32_t cr0 = read_cr0();
     write_cr0(cr0 | (1 << 0));     // 最低位置1
 
     // 清空流水线，远跳转。8 代表选择子

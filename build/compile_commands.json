@@ -23,5 +23,70 @@
   "directory": "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/loader",
   "command": "C:/x86_64-elf-tools-windows/bin/x86_64-elf-gcc.exe  @CMakeFiles/loader.dir/includes_C.rsp -g -c -O0 -m32 -fno-pie -fno-stack-protector -fno-asynchronous-unwind-tables -g -o CMakeFiles/loader.dir/loader_32.c.obj -c C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/loader/loader_32.c",
   "file": "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/loader/loader_32.c"
+},
+{
+  "directory": "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/kernel",
+  "command": "C:/x86_64-elf-tools-windows/bin/x86_64-elf-gcc.exe  @CMakeFiles/kernel.dir/includes_ASM.rsp -m32 -g -g -o CMakeFiles/kernel.dir/init/start.S.obj -c C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/init/start.S",
+  "file": "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/init/start.S"
+},
+{
+  "directory": "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/kernel",
+  "command": "C:/x86_64-elf-tools-windows/bin/x86_64-elf-gcc.exe  @CMakeFiles/kernel.dir/includes_C.rsp -g -c -O0 -m32 -fno-pie -fno-stack-protector -fno-asynchronous-unwind-tables -g -o CMakeFiles/kernel.dir/core/memory.c.obj -c C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/core/memory.c",
+  "file": "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/core/memory.c"
+},
+{
+  "directory": "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/kernel",
+  "command": "C:/x86_64-elf-tools-windows/bin/x86_64-elf-gcc.exe  @CMakeFiles/kernel.dir/includes_C.rsp -g -c -O0 -m32 -fno-pie -fno-stack-protector -fno-asynchronous-unwind-tables -g -o CMakeFiles/kernel.dir/core/task.c.obj -c C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/core/task.c",
+  "file": "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/core/task.c"
+},
+{
+  "directory": "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/kernel",
+  "command": "C:/x86_64-elf-tools-windows/bin/x86_64-elf-gcc.exe  @CMakeFiles/kernel.dir/includes_C.rsp -g -c -O0 -m32 -fno-pie -fno-stack-protector -fno-asynchronous-unwind-tables -g -o CMakeFiles/kernel.dir/cpu/cpu.c.obj -c C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/cpu/cpu.c",
+  "file": "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/cpu/cpu.c"
+},
+{
+  "directory": "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/kernel",
+  "command": "C:/x86_64-elf-tools-windows/bin/x86_64-elf-gcc.exe  @CMakeFiles/kernel.dir/includes_C.rsp -g -c -O0 -m32 -fno-pie -fno-stack-protector -fno-asynchronous-unwind-tables -g -o CMakeFiles/kernel.dir/cpu/irq.c.obj -c C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/cpu/irq.c",
+  "file": "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/cpu/irq.c"
+},
+{
+  "directory": "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/kernel",
+  "command": "C:/x86_64-elf-tools-windows/bin/x86_64-elf-gcc.exe  @CMakeFiles/kernel.dir/includes_C.rsp -g -c -O0 -m32 -fno-pie -fno-stack-protector -fno-asynchronous-unwind-tables -g -o CMakeFiles/kernel.dir/dev/time.c.obj -c C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/dev/time.c",
+  "file": "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/dev/time.c"
+},
+{
+  "directory": "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/kernel",
+  "command": "C:/x86_64-elf-tools-windows/bin/x86_64-elf-gcc.exe  @CMakeFiles/kernel.dir/includes_C.rsp -g -c -O0 -m32 -fno-pie -fno-stack-protector -fno-asynchronous-unwind-tables -g -o CMakeFiles/kernel.dir/init/init.c.obj -c C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/init/init.c",
+  "file": "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/init/init.c"
+},
+{
+  "directory": "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/kernel",
+  "command": "C:/x86_64-elf-tools-windows/bin/x86_64-elf-gcc.exe  @CMakeFiles/kernel.dir/includes_C.rsp -g -c -O0 -m32 -fno-pie -fno-stack-protector -fno-asynchronous-unwind-tables -g -o CMakeFiles/kernel.dir/ipc/mutex.c.obj -c C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/ipc/mutex.c",
+  "file": "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/ipc/mutex.c"
+},
+{
+  "directory": "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/kernel",
+  "command": "C:/x86_64-elf-tools-windows/bin/x86_64-elf-gcc.exe  @CMakeFiles/kernel.dir/includes_C.rsp -g -c -O0 -m32 -fno-pie -fno-stack-protector -fno-asynchronous-unwind-tables -g -o CMakeFiles/kernel.dir/ipc/sem.c.obj -c C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/ipc/sem.c",
+  "file": "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/ipc/sem.c"
+},
+{
+  "directory": "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/kernel",
+  "command": "C:/x86_64-elf-tools-windows/bin/x86_64-elf-gcc.exe  @CMakeFiles/kernel.dir/includes_C.rsp -g -c -O0 -m32 -fno-pie -fno-stack-protector -fno-asynchronous-unwind-tables -g -o CMakeFiles/kernel.dir/tools/bitmap.c.obj -c C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/tools/bitmap.c",
+  "file": "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/tools/bitmap.c"
+},
+{
+  "directory": "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/kernel",
+  "command": "C:/x86_64-elf-tools-windows/bin/x86_64-elf-gcc.exe  @CMakeFiles/kernel.dir/includes_C.rsp -g -c -O0 -m32 -fno-pie -fno-stack-protector -fno-asynchronous-unwind-tables -g -o CMakeFiles/kernel.dir/tools/klib.c.obj -c C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/tools/klib.c",
+  "file": "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/tools/klib.c"
+},
+{
+  "directory": "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/kernel",
+  "command": "C:/x86_64-elf-tools-windows/bin/x86_64-elf-gcc.exe  @CMakeFiles/kernel.dir/includes_C.rsp -g -c -O0 -m32 -fno-pie -fno-stack-protector -fno-asynchronous-unwind-tables -g -o CMakeFiles/kernel.dir/tools/list.c.obj -c C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/tools/list.c",
+  "file": "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/tools/list.c"
+},
+{
+  "directory": "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/kernel",
+  "command": "C:/x86_64-elf-tools-windows/bin/x86_64-elf-gcc.exe  @CMakeFiles/kernel.dir/includes_C.rsp -g -c -O0 -m32 -fno-pie -fno-stack-protector -fno-asynchronous-unwind-tables -g -o CMakeFiles/kernel.dir/tools/log.c.obj -c C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/tools/log.c",
+  "file": "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/tools/log.c"
 }
 ]

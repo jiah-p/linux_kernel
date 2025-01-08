@@ -31,9 +31,6 @@ default_target: all
 
 .SUFFIXES: .hpux_make_needs_suffix_list
 
-# Produce verbose output by default.
-VERBOSE = 1
-
 # Command-line flag to silence nested $(MAKE).
 $(VERBOSE)MAKESILENT = -s
 
@@ -145,6 +142,19 @@ loader/fast:
 	$(MAKE) $(MAKESILENT) -f source/loader/CMakeFiles/loader.dir/build.make source/loader/CMakeFiles/loader.dir/build
 .PHONY : loader/fast
 
+#=============================================================================
+# Target rules for targets named kernel
+
+# Build rule for target.
+kernel: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 kernel
+.PHONY : kernel
+
+# fast build rule for target.
+kernel/fast:
+	$(MAKE) $(MAKESILENT) -f source/kernel/CMakeFiles/kernel.dir/build.make source/kernel/CMakeFiles/kernel.dir/build
+.PHONY : kernel/fast
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -154,6 +164,7 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... boot"
+	@echo "... kernel"
 	@echo "... loader"
 .PHONY : help
 

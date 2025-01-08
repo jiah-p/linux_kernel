@@ -46,7 +46,7 @@
 
 #define PIC_ICW1_ALWAYS_1       (1 << 4)
 #define PIC_ICW1_ICW4           (1 << 0)
-#define PIC_ICW1_8086           (1 << 0)
+#define PIC_ICW4_8086           (1 << 0)
 
 #define PIC_OCW2_EOI            (1 << 5)
 
