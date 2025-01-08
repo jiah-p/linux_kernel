@@ -8,6 +8,15 @@
 
 // assert 宏定义调试
   
+// 对齐 case: size = 0x1010 bound = 0x1000  -> 0xFFFFF000  & 0x1010  取 4K以上位
+static inline uint32_t down2(uint32_t size, uint32_t bound){
+    return size & ~(bound - 1);
+}
+
+// 向上取整
+static inline uint32_t up2(uint32_t size, uint32_t bound){
+    return (size + (bound - 1)) & ~(bound - 1);     
+}
 
 void kernel_strcpy(char * dest, const char * src);
 void kernel_strncpy(char * dest, const char * src, int size);
