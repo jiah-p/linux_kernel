@@ -9,7 +9,7 @@ __asm__(".code16gcc");
  * 只完成一项功能，即从磁盘找到loader文件然后加载到内容中，并跳转过去
  */
 void boot_entry(void) {
-    // 跳转到 loader 中执行
+    // 跳转到 loader 中执行        LOADER_START_ADDR 强转成函数 然后执行  
     ((void (*)(void))LOADER_START_ADDR)();
 } 
 

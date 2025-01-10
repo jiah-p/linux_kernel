@@ -75,4 +75,6 @@ int gdt_alloc_desc(void);
 
 void switch_to_tss(int);
 
+void gdt_free_sel(int);
+
 #endif

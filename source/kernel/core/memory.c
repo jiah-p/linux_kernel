@@ -97,7 +97,7 @@ int memory_create_map(pde_t * page_dir, uint32_t vaddr, uint32_t paddr, int coun
 
         // present 为 0 需要建立表项
         ASSERT(pte->present == 0);
-        pte->v = paddr | perm | PTE_P;
+        pte->v = paddr | perm | PTE_P | PDE_U | PDE_W;
 
         vaddr += MEM_PAGE_SIZE;
         paddr += MEM_PAGE_SIZE;
@@ -114,7 +114,7 @@ void create_kernel_table(){
         // .text rodata 只读 .data 和 .bss mem_free_start 可读写
         {s_text, e_text, s_text, 0},
         {s_data, (void *)MEM_EBDA_START, s_data, PTE_W},
-        
+        {(void *)MEM_EXT_START, (void *)MEM_EXT_END, (void *) MEM_EXT_START, PTE_W}         // 0x00000000  0x8000000  os 空间  // 0x80000000 往上为进程的逻辑地址
     };
 
     for (int i = 0; i < sizeof(kernel_map) / sizeof(memory_map_t); i++)
@@ -179,4 +179,25 @@ void memory_init(boot_info_t * boot_info){
 
     create_kernel_table();
     mmu_set_page_dir((uint32_t)kernel_page_dir);
+}
+
+
+uint32_t memory_create_uvm(void ){
+    pde_t * page_dir = (pde_t *)addr_alloc_page(&paddr_alloc, 1);
+
+    if(page_dir == 0){
+        return 0;
+    }
+
+    kernel_memset((void *)page_dir, 0, MEM_PAGE_SIZE);
+
+    // 页表初始化
+    uint32_t user_pde_start = pde_index(MEMORY_TASK_BASE);
+
+    for (int i = 0; i < user_pde_start; i++)
+    {
+        page_dir[i].v = kernel_page_dir[i].v;       // 进程的操作系统表项 = kernel页表表项
+    }
+
+    return (uint32_t)page_dir;
 }

@@ -10,7 +10,7 @@ typedef struct _list_node_t
     struct _list_node_t * next;
 }list_node_t;
 
-static inline list_node_init(list_node_t * node){
+static inline void list_node_init(list_node_t * node){
     node->next = node->pre = (list_node_t * ) 0;
 }
 
