@@ -4,7 +4,7 @@
 #include "tools/log.h"
 #include "comm/cpu_instr.h"
 #include "cpu/irq.h"
-
+#include "cpu/mmu.h"
 
 static task_mananger_t task_mananger;
 
@@ -111,10 +111,28 @@ task_t * task_first_task(void){
 }
 
 void task_first_init(void){
-    task_init(&task_mananger.first_task, "first task",0, 0);
+    void first_task_entry(void);
+    extern uint8_t s_first_task[], e_first_task[];
+
+    uint32_t copy_size = (uint32_t)(e_first_task - s_first_task);
+    uint32_t alloc_size = 10 * MEM_PAGE_SIZE;
+    ASSERT(copy_size < alloc_size);
+
+    uint32_t first_start = (uint32_t)first_task_entry;              // 0x80000000 first_task_entry
+
+    task_init(&task_mananger.first_task, "first task", first_start, 0);
     write_tr(task_mananger.first_task.tss_sel);
 
     task_mananger.curr_task = &task_mananger.first_task;
+
+    // 任务页表的切换
+    mmu_set_page_dir(task_mananger.first_task.tss.cr3);
+
+
+    memory_alloc_page_for(first_task_entry, alloc_size, PTE_P | PTE_W );
+
+    kernel_memcpy((void *)first_start, (void *)s_first_task, copy_size);
+    
 }
 
 static void idle_task_entry(void){

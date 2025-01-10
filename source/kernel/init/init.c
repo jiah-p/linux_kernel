@@ -33,37 +33,37 @@ void kernel_init(boot_info_t * boot_info){
     // ASSERT(boot_info->ram_region_count != 0);
 
     cpu_init();
+    log_init();
 
     memory_init(boot_info);
 
-    log_init();
     irq_init();
     time_init();
 }
 
 
 
-static uint32_t init_task_stack[1024];      // init_task_entry 栈空间
-static task_t init_task;
-static sem_t sem;                           // 全局信号量
+// static uint32_t init_task_stack[1024];      // init_task_entry 栈空间
+// static task_t init_task;
+// static sem_t sem;                           // 全局信号量
 
-void init_task_entry(void){
-    int count = 0;
-    for (;;)
-    {
-        sem_wait(&sem);                     // 信号量同步
-        log_print("Int task: %d", count++);
-        // 任务切换
-        // task_switch_from_to(&init_task, task_first_task());
+// void init_task_entry(void){
+//     int count = 0;
+//     for (;;)
+//     {
+//         sem_wait(&sem);                     // 信号量同步
+//         log_print("Int task: %d", count++);
+//         // 任务切换
+//         // task_switch_from_to(&init_task, task_first_task());
 
-        // sys_sched_yield();              // 释放当前cpu资源
+//         // sys_sched_yield();              // 释放当前cpu资源
 
-        // sys_sleep(1000);                // 延时 1 s
+//         // sys_sleep(1000);                // 延时 1 s
 
-        // 通过信号量进行进程间通信的测试
+//         // 通过信号量进行进程间通信的测试
 
-    }
-}   
+//     }
+// }   
 
 // 链表 test
 void list_test(){
@@ -91,6 +91,17 @@ void list_test(){
     }
 }
 
+// 跳转进入 first_task 任务
+void move_to_first_task(void){
+    task_t *  curr = task_current();
+    ASSERT(curr != 0);
+
+    tss_t * tss = &(curr->tss);
+    // 内联汇编进行跳转
+    __asm__ __volatile__(
+        "jmp *%[ip]"::[ip]"r"(tss->eip)
+    );
+}
 
 void init_main(){
     
@@ -109,32 +120,34 @@ void init_main(){
     // irq_enable_global();
 
     // task (PCB) 初始化
-    task_init(&init_task, "init task", (uint32_t)init_task_entry, (uint32_t)&init_task_stack[1024]);         // 栈 高地址 -> 低地址 所以压入  init_task_stack[1024] 应该是最高位 小端存储 // 而数据永远从低位开始读取
+    // task_init(&init_task, "init task", (uint32_t)init_task_entry, (uint32_t)&init_task_stack[1024]);         // 栈 高地址 -> 低地址 所以压入  init_task_stack[1024] 应该是最高位 小端存储 // 而数据永远从低位开始读取
     task_first_init();
+
+    move_to_first_task();
 
     // 更改 tr寄存器
     // write_tr(first_task.tss_sel);
 
     // 全局信号量初始化
-    sem_init(&sem, 0);
+    // sem_init(&sem, 0);
 
-    // 打开全局中断，定时器开始工作
-    irq_enable_global();
-    // 任务1 
-    int count = 0;
-    for(;;){
-        log_print("Count: %d", count++);
-        // 任务切换 任务2 
-        // task_switch_from_to(task_first_task(), &init_task);
+    // // 打开全局中断，定时器开始工作
+    // irq_enable_global();
+    // // 任务1 
+    // int count = 0;
+    // for(;;){
+    //     log_print("Count: %d", count++);
+    //     // 任务切换 任务2 
+    //     // task_switch_from_to(task_first_task(), &init_task);
 
-        // 主动switch -> 主动放弃cpu资源 通过任务管理 由cpu进行调度
-        // sys_sched_yield();
+    //     // 主动switch -> 主动放弃cpu资源 通过任务管理 由cpu进行调度
+    //     // sys_sched_yield();
 
-        // 信号量发送
-        sem_notify(&sem);
+    //     // 信号量发送
+    //     sem_notify(&sem);
 
-        // 设计延时
-        sys_sleep(1000);
-    }
+    //     // 设计延时
+    //     sys_sleep(1000);
+    // }
 }
 

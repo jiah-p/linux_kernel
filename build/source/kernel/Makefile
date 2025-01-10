@@ -31,6 +31,9 @@ default_target: all
 
 .SUFFIXES: .hpux_make_needs_suffix_list
 
+# Produce verbose output by default.
+VERBOSE = 1
+
 # Command-line flag to silence nested $(MAKE).
 $(VERBOSE)MAKESILENT = -s
 
@@ -250,6 +253,38 @@ dev/time.c.s:
 	cd C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build && $(MAKE) $(MAKESILENT) -f source/kernel/CMakeFiles/kernel.dir/build.make source/kernel/CMakeFiles/kernel.dir/dev/time.c.s
 .PHONY : dev/time.c.s
 
+init/first_task_entry.obj: init/first_task_entry.S.obj
+.PHONY : init/first_task_entry.obj
+
+# target to build an object file
+init/first_task_entry.S.obj:
+	cd C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build && $(MAKE) $(MAKESILENT) -f source/kernel/CMakeFiles/kernel.dir/build.make source/kernel/CMakeFiles/kernel.dir/init/first_task_entry.S.obj
+.PHONY : init/first_task_entry.S.obj
+
+init/fisrt_task.obj: init/fisrt_task.c.obj
+.PHONY : init/fisrt_task.obj
+
+# target to build an object file
+init/fisrt_task.c.obj:
+	cd C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build && $(MAKE) $(MAKESILENT) -f source/kernel/CMakeFiles/kernel.dir/build.make source/kernel/CMakeFiles/kernel.dir/init/fisrt_task.c.obj
+.PHONY : init/fisrt_task.c.obj
+
+init/fisrt_task.i: init/fisrt_task.c.i
+.PHONY : init/fisrt_task.i
+
+# target to preprocess a source file
+init/fisrt_task.c.i:
+	cd C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build && $(MAKE) $(MAKESILENT) -f source/kernel/CMakeFiles/kernel.dir/build.make source/kernel/CMakeFiles/kernel.dir/init/fisrt_task.c.i
+.PHONY : init/fisrt_task.c.i
+
+init/fisrt_task.s: init/fisrt_task.c.s
+.PHONY : init/fisrt_task.s
+
+# target to generate assembly for a file
+init/fisrt_task.c.s:
+	cd C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build && $(MAKE) $(MAKESILENT) -f source/kernel/CMakeFiles/kernel.dir/build.make source/kernel/CMakeFiles/kernel.dir/init/fisrt_task.c.s
+.PHONY : init/fisrt_task.c.s
+
 init/init.obj: init/init.c.obj
 .PHONY : init/init.obj
 
@@ -450,6 +485,10 @@ help:
 	@echo "... dev/time.obj"
 	@echo "... dev/time.i"
 	@echo "... dev/time.s"
+	@echo "... init/first_task_entry.obj"
+	@echo "... init/fisrt_task.obj"
+	@echo "... init/fisrt_task.i"
+	@echo "... init/fisrt_task.s"
 	@echo "... init/init.obj"
 	@echo "... init/init.i"
 	@echo "... init/init.s"

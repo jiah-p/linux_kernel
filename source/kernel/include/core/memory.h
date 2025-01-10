@@ -47,4 +47,6 @@ int memory_create_map(pde_t * page_dir, uint32_t vaddr, uint32_t paddr, int coun
 
 uint32_t memory_create_uvm(void );
 
+int memory_alloc_page_for(uint32_t addr, uint32_t size, uint32_t perm);
+
 #endif

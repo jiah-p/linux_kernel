@@ -56,6 +56,16 @@
 },
 {
   "directory": "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/kernel",
+  "command": "C:/x86_64-elf-tools-windows/bin/x86_64-elf-gcc.exe  @CMakeFiles/kernel.dir/includes_ASM.rsp -m32 -g -g -o CMakeFiles/kernel.dir/init/first_task_entry.S.obj -c C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/init/first_task_entry.S",
+  "file": "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/init/first_task_entry.S"
+},
+{
+  "directory": "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/kernel",
+  "command": "C:/x86_64-elf-tools-windows/bin/x86_64-elf-gcc.exe  @CMakeFiles/kernel.dir/includes_C.rsp -g -c -O0 -m32 -fno-pie -fno-stack-protector -fno-asynchronous-unwind-tables -g -o CMakeFiles/kernel.dir/init/fisrt_task.c.obj -c C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/init/fisrt_task.c",
+  "file": "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/init/fisrt_task.c"
+},
+{
+  "directory": "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/kernel",
   "command": "C:/x86_64-elf-tools-windows/bin/x86_64-elf-gcc.exe  @CMakeFiles/kernel.dir/includes_C.rsp -g -c -O0 -m32 -fno-pie -fno-stack-protector -fno-asynchronous-unwind-tables -g -o CMakeFiles/kernel.dir/init/init.c.obj -c C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/init/init.c",
   "file": "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/init/init.c"
 },

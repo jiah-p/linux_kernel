@@ -8,6 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_ASM
+  "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/init/first_task_entry.S" "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/kernel/CMakeFiles/kernel.dir/init/first_task_entry.S.obj"
   "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/init/start.S" "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/kernel/CMakeFiles/kernel.dir/init/start.S.obj"
   )
 set(CMAKE_ASM_COMPILER_ID "GNU")
@@ -25,6 +26,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/cpu/cpu.c" "source/kernel/CMakeFiles/kernel.dir/cpu/cpu.c.obj" "gcc" "source/kernel/CMakeFiles/kernel.dir/cpu/cpu.c.obj.d"
   "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/cpu/irq.c" "source/kernel/CMakeFiles/kernel.dir/cpu/irq.c.obj" "gcc" "source/kernel/CMakeFiles/kernel.dir/cpu/irq.c.obj.d"
   "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/dev/time.c" "source/kernel/CMakeFiles/kernel.dir/dev/time.c.obj" "gcc" "source/kernel/CMakeFiles/kernel.dir/dev/time.c.obj.d"
+  "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/init/fisrt_task.c" "source/kernel/CMakeFiles/kernel.dir/init/fisrt_task.c.obj" "gcc" "source/kernel/CMakeFiles/kernel.dir/init/fisrt_task.c.obj.d"
   "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/init/init.c" "source/kernel/CMakeFiles/kernel.dir/init/init.c.obj" "gcc" "source/kernel/CMakeFiles/kernel.dir/init/init.c.obj.d"
   "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/ipc/mutex.c" "source/kernel/CMakeFiles/kernel.dir/ipc/mutex.c.obj" "gcc" "source/kernel/CMakeFiles/kernel.dir/ipc/mutex.c.obj.d"
   "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/ipc/sem.c" "source/kernel/CMakeFiles/kernel.dir/ipc/sem.c.obj" "gcc" "source/kernel/CMakeFiles/kernel.dir/ipc/sem.c.obj.d"
