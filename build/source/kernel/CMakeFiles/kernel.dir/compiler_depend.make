@@ -44,7 +44,8 @@ source/kernel/CMakeFiles/kernel.dir/cpu/cpu.c.obj: ../source/kernel/cpu/cpu.c \
   ../source/kernel/include/cpu/irq.h \
   ../source/kernel/include/ipc/mutex.h \
   ../source/kernel/include/tools/list.h \
-  ../source/kernel/include/core/task.h
+  ../source/kernel/include/core/task.h \
+  ../source/kernel/include/core/syscall.h
 
 source/kernel/CMakeFiles/kernel.dir/cpu/irq.c.obj: ../source/kernel/cpu/irq.c \
   ../source/kernel/include/cpu/irq.h \
@@ -71,7 +72,9 @@ source/kernel/CMakeFiles/kernel.dir/init/fisrt_task.c.obj: ../source/kernel/init
   ../source/kernel/include/cpu/cpu.h \
   ../source/comm/types.h \
   ../source/kernel/include/tools/list.h \
-  ../source/kernel/include/tools/log.h
+  ../source/kernel/include/tools/log.h \
+  ../source/applib/lib_syscall.h \
+  ../source/kernel/include/os_cfg.h
 
 source/kernel/CMakeFiles/kernel.dir/init/init.c.obj: ../source/kernel/init/init.c \
   ../source/kernel/init/init.h \
@@ -155,6 +158,8 @@ source/kernel/CMakeFiles/kernel.dir/tools/log.c.obj: ../source/kernel/tools/log.
 
 ../source/kernel/include/cpu/cpu.h:
 
+../source/kernel/include/core/syscall.h:
+
 ../source/comm/types.h:
 
 ../source/kernel/include/core/task.h:
@@ -200,6 +205,8 @@ C:/x86_64-elf-tools-windows/lib/gcc/x86_64-elf/7.1.0/include/stdarg.h:
 ../source/kernel/include/dev/time.h:
 
 ../source/kernel/init/fisrt_task.c:
+
+../source/applib/lib_syscall.h:
 
 ../source/kernel/init/init.h:
 

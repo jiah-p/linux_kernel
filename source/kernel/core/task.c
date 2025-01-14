@@ -22,11 +22,18 @@ static int tss_init(task_t * task, int flag, uint32_t entry, uint32_t esp){
         SEG_P_PRESENT | SEG_DPL0 | SEG_TYPE_TSS 
     );
 
+    // 给 特权级0 分配内存
+    uint32_t kernel_stack = memory_alloc_page();
+    if(kernel_stack == 0){
+        goto tss_init_failed;
+    }
+
     kernel_memset(&task->tss, 0, sizeof(task_t));
     // eip 存放 当前执行指令的地址 ：初始化时 指向程序入口地址
     task->tss.eip = entry;
     // esp 程序栈顶指针 (注意程序各自栈的隔离)       特权级0 同值
-    task->tss.esp = task->tss.eps0 = esp;
+    task->tss.esp = esp;
+    task->tss.eps0 = kernel_stack + MEM_PAGE_SIZE;          // 指向高地址 注意：栈生长方向
 
     // 选择子
     int code_sel, data_sel;
@@ -50,13 +57,20 @@ static int tss_init(task_t * task, int flag, uint32_t entry, uint32_t esp){
     uint32_t page_dir = memory_create_uvm();
 
     if(page_dir == 0){
-        gdt_free_sel(tss_sel);
-        return -1;
+        
+        goto  tss_init_failed;
     }
     task->tss.cr3 = page_dir;
     task->tss_sel = tss_sel;
-
     return 0;
+
+// 资源回收
+tss_init_failed:
+    gdt_free_sel(tss_sel);
+    if(kernel_stack){       
+        memory_free_page(kernel_stack);
+    }
+    return -1;
 }
 
 void task_set_ready(task_t * task){
@@ -130,7 +144,7 @@ void task_first_init(void){
 
     uint32_t first_start = (uint32_t)first_task_entry;              // 0x80000000 first_task_entry
 
-    task_init(&task_mananger.first_task, "first task", 0, first_start, 0);
+    task_init(&task_mananger.first_task, "first task", 0, first_start, first_start + alloc_size);          // flag 0 -> dpl3 
     write_tr(task_mananger.first_task.tss_sel);
 
     task_mananger.curr_task = &task_mananger.first_task;
@@ -176,7 +190,7 @@ void task_mananger_init(void){
 
 // 获取当前进程
 task_t * task_current(void){
-    return &task_mananger.curr_task;
+    return task_mananger.curr_task;
 }
 
 int sys_sched_yield(void){

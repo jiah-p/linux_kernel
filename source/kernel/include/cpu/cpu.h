@@ -40,14 +40,15 @@ typedef struct _tss_t
 }tss_t;
 
 
-#define GETE_P_PRESENT       (1 << 15)
+#define GATE_P_PRESENT       (1 << 15)
 #define GATE_DPL0            (0 << 13)
 #define GATE_DPL3            (3 << 13)  // 0b11 << 13
 #define GATE_TYPE_INT        (0xE << 8)
+#define GATE_TYPE_SYSCALL    (0xC << 8)
 
 #pragma pack()
 
-#define SEG_G           (1 << 15)
+#define SEG_G           (1 << 15) 
 #define SEG_D           (1 << 14)
 #define SEG_P_PRESENT   (1 << 7)
 

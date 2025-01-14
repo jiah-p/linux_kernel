@@ -3,14 +3,9 @@
     .extern kernel_init
     .global _start 
     .extern init_main 
-    # void start (boot_info_t * boot_info)
 _start:
-    ; push %ebp
-    ; mov %esp, %ebp
-    ; mov 0x8(%enp), %eax
 
     mov 4(%esp), %eax
-    # kernel_init(boot_info)
     push %eax
     call kernel_init
 
@@ -80,8 +75,6 @@ exception_handler unknown, -1, 0
 
 ;  除 0 异常处理函数 
 exception_handler divider, 0, 0
-
-
 exception_handler Debug, 1, 0
 exception_handler NMI, 2, 0
 exception_handler breakpoint, 3, 0
@@ -95,7 +88,7 @@ exception_handler sgement_not_present, 11, 1
 exception_handler stack_segment_fault, 12, 1
 exception_handler general_protection, 13, 1
 exception_handler page_fault, 14, 1
-exception_handler fpu_error, 16, 0      // float processor unit
+exception_handler fpu_error, 16, 0      
 exception_handler aligment_check, 17, 1
 exception_handler machine_check, 18, 0
 exception_handler simd_exception, 19, 0
@@ -120,10 +113,36 @@ simple_switch:
 ; 切换 任务栈
     mov %edx, (%eax)
     mov %edx, %esp
-    
     pop %edi
     pop %esi
     pop %ebx
     pop %ebp
 
     ret
+
+ ; far return 并返回 5个值
+    .global exception_handler_syscall
+    .extern do_handler_syscall
+exception_handler_syscall:
+    pusha   
+    push %ds
+    push %es
+    push %fs
+    push %gs
+    pushf 
+
+    mov %esp, %eax
+    push %eax
+    call do_handler_syscall
+    add $4, %esp
+
+    popf
+    pop %gs
+    pop %fs
+    pop %es 
+    pop %ds
+    popa
+
+    retf $(5*4) 
+
+       

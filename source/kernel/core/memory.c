@@ -60,7 +60,7 @@ static uint32_t total_mem_size(boot_info_t * boot_info){
     return mem_size;
 }
 
-pte_t * find_pte(pte_t * page_dir, uint32_t vaddr, int alloc){
+pte_t * find_pte(pde_t * page_dir, uint32_t vaddr, int alloc){
     pde_t * page_table;
     pde_t * pde = page_dir + pde_index(vaddr);
 
@@ -90,7 +90,7 @@ pte_t * find_pte(pte_t * page_dir, uint32_t vaddr, int alloc){
 int memory_create_map(pte_t * page_dir, uint32_t vaddr, uint32_t paddr, int count, uint32_t perm){
     for (int i = 0; i < count; i++)
     {
-        pte_t * pte = find_pte(page_dir, vaddr, 1);                     // 1 如果未找到，则进行 PTE表的分配
+        pte_t * pte = find_pte((pde_t *)page_dir, vaddr, 1);                     // 1 如果未找到，则进行 PTE表的分配
         if(pte == (pte_t *)0){
             return -1;
         }
@@ -231,3 +231,24 @@ int memory_alloc_page_for(uint32_t addr, uint32_t size, uint32_t perm){
     return memory_alloc_for_page_dir(task_current()->tss.cr3, addr, size, perm);
 }
 
+uint32_t memory_alloc_page(void){
+    uint32_t addr = addr_alloc_page(&paddr_alloc, 1);
+    return addr;
+}
+
+static pde_t * curr_page_dir(){
+    return (pde_t *)(task_current()->tss.cr3);
+}
+
+void memory_free_page(uint32_t addr){
+    if(addr < MEMORY_TASK_BASE){
+        addr_free_page(&paddr_alloc, addr, 1);
+    }else{
+        pte_t * pte = find_pte(curr_page_dir(), addr, 0);
+
+        ASSERT((pte == (pte_t *) 0) && pte->present);
+        addr_free_page(&paddr_alloc, pte_paddr(pte), 1);
+
+        pte->v = 0;
+    }
+}

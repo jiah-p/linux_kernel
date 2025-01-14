@@ -32,7 +32,7 @@ static void init_pic(void){
 void irq_init(void){
     for(int i = 0; i < IDE_TABLE_NR; i++){
         gate_desc_set(idt_table + i, KERNEL_SELECTOR_CS, (uint32_t)exception_handler_unknown, 
-        GETE_P_PRESENT | GATE_DPL0 | GATE_TYPE_INT );
+        GATE_P_PRESENT | GATE_DPL0 | GATE_TYPE_INT );
     }
 
     irq_install(IRQ0_DE, (irq_handler_t)exception_handler_divider);
@@ -240,7 +240,7 @@ int irq_install(int irq_num, irq_handler_t handler){
     }
 
     gate_desc_set(idt_table + irq_num, KERNEL_SELECTOR_CS, 
-    (uint32_t)handler, GETE_P_PRESENT | GATE_DPL0 | GATE_TYPE_INT);
+    (uint32_t)handler, GATE_P_PRESENT | GATE_DPL0 | GATE_TYPE_INT);
 
     return 0;
 }
