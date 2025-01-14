@@ -14,6 +14,7 @@
 #define PDE_W                   (1 << 1)
 #define PTE_W                   (1 << 1)
 #define PDE_U                   (1 << 2)
+#define PTE_U                   (1 << 2)
 
 // 二级页表
 typedef union _pde_t
@@ -71,11 +72,11 @@ static inline uint32_t pte_index(uint32_t vaddr){
     return (vaddr >> 12) & 0x3ff;
 }
 
-static inline pde_paddr(pde_t * pde){
+static inline uint32_t pde_paddr(pde_t * pde){
     return pde->phy_pt_addr << 12;
 }
 
-static inline pte_paddr(pte_t * pte){
+static inline uint32_t pte_paddr(pte_t * pte){
     return pte->phy_page_addr << 12;
 }
 

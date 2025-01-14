@@ -2,6 +2,7 @@
 #include "cpu/cpu.h"
 #include "os_cfg.h"
 #include "tools/log.h"
+#include "comm/cpu_instr.h"
 
 #define IDE_TABLE_NR         128
 
@@ -63,17 +64,26 @@ void irq_init(void){
 
 // 打印 cpu registers 信息
 void dump_core_regs(exception_frame_t * frame){
+    uint32_t esp, ss;
+
+    if(frame->cs & 0x3){
+        // 之前不是 特权级 0
+        ss = frame->ss3;
+        esp = frame->esp3;
+    }else{
+        ss = frame->ds;
+        esp = frame->esp;
+    }
     log_print("IRQ: %d, error code: %d", frame->num, frame->error_code);
 
     log_print("CS: %d\n=DS: %d\nES: %d\nSS: %d\nFS: %d\nGS: %d",
-    frame->cs, frame->ds, frame->es, frame->ds, frame->fs, frame->gs);
+    frame->cs, frame->ds, frame->es, ss, frame->fs, frame->gs);
 
     log_print("EAX: 0x%x\n" "EBX: 0x%x\n" "ECX: 0x%x\n" "EDX: 0x%x\n" "EDI: 0x%x\n"
     "ESI: 0x%x\n" "EBP: 0x%x\n" "ESP: 0x%x\n", frame->eax, frame->ebx, frame->ecx
-    , frame->edx, frame->edi, frame->esi, frame->ebp, frame->esp);
+    , frame->edx, frame->edi, frame->esi, frame->ebp,esp);
 
     log_print("EIP: %0x%x\nEFLAGS:0x%x\n", frame->eip, frame->eflags);
-
 }
 
 // 这个结构体 作为参数去找栈上面部分的元素 的方法，然后注意 汇编层面 的实现
@@ -94,88 +104,134 @@ static void do_default_handler(exception_frame_t * frame, const char * msg){
 }
 
 // 异常捕获
-// void do_handler_unknown(exception_frame_t * frame){
-//     do_default_handler(frame, "unknown exception");     // 默认处理程序
-// }
+void do_handler_unknown(exception_frame_t * frame){
+    do_default_handler(frame, "unknown exception");     // 默认处理程序
+}
 
-// void exception_handler_divider(exception_frame_t * frame){
-//     do_default_handler(frame, "Divider exception");
-// }
-// void exception_handler_Debug(exception_frame_t * frame){
-//     do_default_handler(frame, "Debug exception");
-// }
+void exception_handler_divider(exception_frame_t * frame){
+    do_default_handler(frame, "Divider exception");
+}
+void exception_handler_Debug(exception_frame_t * frame){
+    do_default_handler(frame, "Debug exception");
+}
 
-// void exception_handler_NMI(exception_frame_t * frame){
-//     do_default_handler(frame, "NMI exception");
-// }
+void exception_handler_NMI(exception_frame_t * frame){
+    do_default_handler(frame, "NMI exception");
+}
 
-// void exception_handler_breakpoint(exception_frame_t * frame){
-//     do_default_handler(frame, "breakpoint exception");
-// }
+void exception_handler_breakpoint(exception_frame_t * frame){
+    do_default_handler(frame, "breakpoint exception");
+}
 
-// void exception_handler_overflow(exception_frame_t * frame){
-//     do_default_handler(frame, "overflow exception");
-// }
+void exception_handler_overflow(exception_frame_t * frame){
+    do_default_handler(frame, "overflow exception");
+}
 
-// void exception_handler_bound_range(exception_frame_t * frame){
-//     do_default_handler(frame, "bound_range exception");
-// }
+void exception_handler_bound_range(exception_frame_t * frame){
+    do_default_handler(frame, "bound_range exception");
+}
 
-// void exception_handler_invalid_opcode(exception_frame_t * frame){
-//     do_default_handler(frame, "invalid_opcode exception");
-// }
+void exception_handler_invalid_opcode(exception_frame_t * frame){
+    do_default_handler(frame, "invalid_opcode exception");
+}
 
-// void exception_handler_device_unavabliable(exception_frame_t * frame){
-//     do_default_handler(frame, "device_unavabliable exception");
-// }
+void exception_handler_device_unavabliable(exception_frame_t * frame){
+    do_default_handler(frame, "device_unavabliable exception");
+}
 
-// void exception_handler_double_fault(exception_frame_t * frame){
-//     do_default_handler(frame, "double_fault exception");
-// }
+void exception_handler_double_fault(exception_frame_t * frame){
+    do_default_handler(frame, "double_fault exception");
+}
 
-// void exception_handler_invalid_tss(exception_frame_t * frame){
-//     do_default_handler(frame, "invalid_tss exception");
-// }
+void exception_handler_invalid_tss(exception_frame_t * frame){
+    do_default_handler(frame, "invalid_tss exception");
+}
 
-// void exception_handler_sgement_not_present(exception_frame_t * frame){
-//     do_default_handler(frame, "sgement_not_present exception");
-// }
+void exception_handler_sgement_not_present(exception_frame_t * frame){
+    do_default_handler(frame, "sgement_not_present exception");
+}
 
-// void exception_handler_stack_segment_fault(exception_frame_t * frame){
-//     do_default_handler(frame, "stack_segment_fault exception");
-// }
+void exception_handler_stack_segment_fault(exception_frame_t * frame){
+    do_default_handler(frame, "stack_segment_fault exception");
+}
 
-// void exception_handler_general_protection(exception_frame_t * frame){
-//     do_default_handler(frame, "general_protection exception");
-// }
+void exception_handler_general_protection(exception_frame_t * frame){
+    log_print("----");
+    log_print("GP fault.");
+    if(frame->error_code & ERR_EXT){
+        log_print("the exception occurred during delivery of an event external to the program: 0x%x", read_cr2());
+    }
+    else{
+        log_print("the exception occurred during delivery of a software interrupt: 0x%x", read_cr2());
+    }
+    if(frame->error_code & ERR_IDT){
+        log_print("The index portion of the error code refers to a gate descriptor in the IDT: 0x%x", read_cr2());
+    }
+    else{
+        log_print("The index portion of the error code refers to a gate descriptor in the GDT: 0x%x", read_cr2());
+    }
 
-// void exception_handler_page_fault(exception_frame_t * frame){
-//     do_default_handler(frame, "page_fault exception");
-// }
+    log_print("selector index: %d", frame->error_code & 0xFFF8);
 
-// void exception_handler_fpu_error(exception_frame_t * frame){
-//     do_default_handler(frame, "fpu_error exception");
-// }
+    dump_core_regs(frame);
+    while(True){
+        hlt();  
+    }
+}
 
-// void exception_handler_aligment_check(exception_frame_t * frame){
-//     do_default_handler(frame, "aligment_check exception");
-// }
+void exception_handler_page_fault(exception_frame_t * frame){
+    log_print("----");
+    log_print("Page fault.");
+    if(frame->error_code & ERR_PAGE_P){
+        log_print("The fault was caused by a page-level protection violation: 0x%x", read_cr2());
+    }
+    else{
+        log_print("The fault was caused by a non-present page: 0x%x", read_cr2());
+    }
+    if(frame->error_code & ERR_PAGE_US){
+        log_print("The access causing the fault was a write: 0x%x", read_cr2());
+    }
+    else{
+        log_print("he access causing the fault was a read: 0x%x", read_cr2());
+    }
+    if(frame->error_code & ERR_PAGE_WR){
+        log_print("A user-mode access caused the fault: 0x%x", read_cr2());
+    }
+    else{
+        log_print("A supervisor-mode access caused the fault: 0x%x", read_cr2());
+    }
 
-// void exception_handler_machine_check(exception_frame_t * frame){
-//     do_default_handler(frame, "machine_check exception");
-// }
+    dump_core_regs(frame);
 
-// void exception_handler_simd_exception(exception_frame_t * frame){
-//     do_default_handler(frame, "simd_exception exception");
-// }
+    while(True){
+        hlt();  
+    }
+    
+}
 
-// void exception_handler_virtual_exception(exception_frame_t * frame){
-//     do_default_handler(frame, "virtual_exception exception");
-// }
+void exception_handler_fpu_error(exception_frame_t * frame){
+    do_default_handler(frame, "fpu_error exception");
+}
 
-// void exception_handler_control_exception(exception_frame_t * frame){
-//     do_default_handler(frame, "control_exception exception");
-// }
+void exception_handler_aligment_check(exception_frame_t * frame){
+    do_default_handler(frame, "aligment_check exception");
+}
+
+void exception_handler_machine_check(exception_frame_t * frame){
+    do_default_handler(frame, "machine_check exception");
+}
+
+void exception_handler_simd_exception(exception_frame_t * frame){
+    do_default_handler(frame, "simd_exception exception");
+}
+
+void exception_handler_virtual_exception(exception_frame_t * frame){
+    do_default_handler(frame, "virtual_exception exception");
+}
+
+void exception_handler_control_exception(exception_frame_t * frame){
+    do_default_handler(frame, "control_exception exception");
+}
 
 
 int irq_install(int irq_num, irq_handler_t handler){

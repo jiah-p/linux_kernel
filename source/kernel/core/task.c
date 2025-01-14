@@ -5,12 +5,13 @@
 #include "comm/cpu_instr.h"
 #include "cpu/irq.h"
 #include "cpu/mmu.h"
+#include "core/memory.h"
 
 static task_mananger_t task_mananger;
 
 static uint32_t idle_task_stack[IDLE_TASK_SIZE];          // 空闲进程栈空间
 
-static int tss_init(task_t * task, uint32_t entry, uint32_t esp){
+static int tss_init(task_t * task, int flag, uint32_t entry, uint32_t esp){
     int tss_sel = gdt_alloc_desc();
     if(tss_sel == -1){
         log_print("alloc tss failded.");
@@ -28,9 +29,18 @@ static int tss_init(task_t * task, uint32_t entry, uint32_t esp){
     task->tss.esp = task->tss.eps0 = esp;
 
     // 选择子
-    task->tss.ss = task->tss.ss0 = KERNEL_SELECTOR_DS;          // 平坦模型
-    
-    task->tss.es = task->tss.ds = task->tss.fs = task->tss.gs = KERNEL_SELECTOR_DS;
+    int code_sel, data_sel;
+    if(flag & TASK_FLAGS_SYSTEM){
+        code_sel = KERNEL_STACK_SIZE;
+        data_sel = KERNEL_SELECTOR_DS;
+    }else{
+        code_sel = task_mananger.app_code_sel | SEG_CPL3;
+        data_sel = task_mananger.app_data_sel | SEG_CPL3;
+    }
+  
+    task->tss.ss = data_sel;          
+    task->tss.ss0 = KERNEL_SELECTOR_DS;     // 特权级 0 的时候 栈描述符
+    task->tss.es = task->tss.ds = task->tss.fs = task->tss.gs = data_sel;
     task->tss.cs = KERNEL_SELECTOR_CS;
 
     task->tss.eflags = EFLAGS_IF | EFLAGS_DEFAULT;
@@ -60,10 +70,10 @@ void task_set_block(task_t * task){
     list_remove(&task_mananger.ready_list, &task->run_node);
 }
 
-int task_init(task_t * task, const char * name, uint32_t entry, uint32_t esp){
+int task_init(task_t * task, const char * name, int flag, uint32_t entry, uint32_t esp){
     ASSERT(task != (task_t * )0);
 
-    tss_init(task, entry, esp);
+    tss_init(task, flag, entry, esp);
     // uint32_t * pesp = (uint32_t *)esp;
     // edi esi ebx ebp 寄存器初始化
     // if(pesp){
@@ -120,7 +130,7 @@ void task_first_init(void){
 
     uint32_t first_start = (uint32_t)first_task_entry;              // 0x80000000 first_task_entry
 
-    task_init(&task_mananger.first_task, "first task", first_start, 0);
+    task_init(&task_mananger.first_task, "first task", 0, first_start, 0);
     write_tr(task_mananger.first_task.tss_sel);
 
     task_mananger.curr_task = &task_mananger.first_task;
@@ -129,7 +139,7 @@ void task_first_init(void){
     mmu_set_page_dir(task_mananger.first_task.tss.cr3);
 
 
-    memory_alloc_page_for(first_task_entry, alloc_size, PTE_P | PTE_W );
+    memory_alloc_page_for(first_task_entry, alloc_size, PTE_P | PTE_W | PTE_U);
 
     kernel_memcpy((void *)first_start, (void *)s_first_task, copy_size);
     
@@ -144,12 +154,22 @@ static void idle_task_entry(void){
 
 // 任务管理模块初始化
 void task_mananger_init(void){
+    int sel = gdt_alloc_desc();
+    segment_desc_set(sel, 0x000000000, 0xFFFFFFFF, SEG_P_PRESENT | SEG_DPL3 | SEG_TYPE_DATA | SEG_TYPE_RW | SEG_D);
+
+    task_mananger.app_data_sel = sel;
+
+    sel = gdt_alloc_desc();
+    segment_desc_set(sel, 0x000000000, 0xFFFFFFFF, SEG_P_PRESENT | SEG_DPL3 | SEG_TYPE_CODE | SEG_TYPE_RW | SEG_D);
+    task_mananger.app_code_sel = sel;
+
     list_init(&task_mananger.ready_list);
     list_init(&task_mananger.task_list);
     list_init(&task_mananger.sleep_list);
 
     task_mananger.curr_task = (task_t *)0;
-    task_init(&task_mananger.idle_task, "idle task", (uint32_t)idle_task_entry, (uint32_t)(idle_task_stack + IDLE_TASK_SIZE));
+    // 空闲任务 特权级 设置为 TASK_FLAGS_SYSTEM (1 << 0)
+    task_init(&task_mananger.idle_task, "idle task", TASK_FLAGS_SYSTEM, (uint32_t)idle_task_entry, (uint32_t)(idle_task_stack + IDLE_TASK_SIZE));
 
     task_first_init();
 }

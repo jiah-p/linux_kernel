@@ -97,9 +97,20 @@ void move_to_first_task(void){
     ASSERT(curr != 0);
 
     tss_t * tss = &(curr->tss);
-    // 内联汇编进行跳转
+    // 内联汇编进行跳转，手动压入 各个寄存器值，iret自动返回到各个寄存器
     __asm__ __volatile__(
-        "jmp *%[ip]"::[ip]"r"(tss->eip)
+        "push %[ss]\n\t"
+        "push %[esp]\n\t"
+        "push %[eflags]\n\t"
+        "push %[cs]\n\t"
+        "push %[eip]\n\t"
+        // 返回 低特权级栈
+        "iret"::[ss]"r"(tss->ss),
+        [esp]"r"(tss->esp),
+        [eflags]"r"(tss->eflags),
+        [cs]"r"(tss->cs),
+        [eip]"r"(tss->eip)
+        
     );
 }
 

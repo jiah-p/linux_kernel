@@ -9,6 +9,9 @@
 #define TASK_TIME_SLICE_DEFAULT         10
 #define IDLE_TASK_SIZE                  102
 
+// 任务类型的特权级
+#define TASK_FLAGS_SYSTEM               (1 << 0)
+
 // 任务相关 PCB 设计    目前只放一个 tss 结构
 typedef struct _task_t
 {
@@ -35,7 +38,7 @@ typedef struct _task_t
 }task_t;
 
 // 任务初始化 参数：入口地址 和 栈顶指针
-int task_init(task_t * task, const char * name, uint32_t entry, uint32_t esp);
+int task_init(task_t * task, const char * name,int flag, uint32_t entry, uint32_t esp);
 
 // 任务切换
 void task_switch_from_to(task_t * from, task_t * to);
@@ -49,7 +52,10 @@ typedef struct _task_mananger_t{
     list_t sleep_list;              // 延时队列
 
     task_t first_task;    
-    task_t idle_task;               // 空闲进程             
+    task_t idle_task;               // 空闲进程      
+
+    int app_code_sel;
+    int app_data_sel;       
 }task_mananger_t;
 
 

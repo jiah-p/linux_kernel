@@ -5,6 +5,7 @@
 
 #define EFLAGS_DEFAULT              (1 << 1)
 #define EFLAGS_IF                   (1 << 9)
+#define True                        1
 
 #pragma pack(1)     // 禁止填充
 typedef struct _segment_desc_t 
@@ -29,10 +30,11 @@ typedef struct _gate_desc_t
 typedef struct _tss_t   
 {
     uint32_t pre_link;
-    uint32_t eps0, ss0, esp1, ss1, esp2, ss2;   // 保护模式下 不同特权级栈 预留
+    uint32_t eps0, ss0, esp1, ss1, esp2, ss2;   // 保护模式下 不同特权级栈描述符
+    // ss0 ss1 ss2 用于 特权级 变化 从而引发 栈空间变化的栈段
     uint32_t cr3;                               // 页表
     uint32_t eip, eflags, eax, ecx, edx, ebx, esp, ebp, esi, edi;
-    uint32_t es, cs, ss, ds, fs, gs;
+    uint32_t es, cs, ss, ds, fs, gs;            // ss 为 ss3
     uint32_t ldt;                               // ldt 表
     uint32_t iomap;                             // 接口访问位图
 }tss_t;
@@ -51,6 +53,9 @@ typedef struct _tss_t
 
 #define SEG_DPL0        (0 << 5)
 #define SEG_DPL3        (3 << 5)
+
+#define SEG_CPL0        (0 << 0)
+#define SEG_CPL3        (3 << 0)
 
 #define SEG_S_SYSTEM    (0 << 4)
 #define SEG_S_NORMAL    (1 << 4)

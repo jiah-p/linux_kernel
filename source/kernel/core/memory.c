@@ -87,7 +87,7 @@ pte_t * find_pte(pte_t * page_dir, uint32_t vaddr, int alloc){
 
 
 // 建立页表的地址映射关系 逻辑（虚拟） -> 物理
-int memory_create_map(pde_t * page_dir, uint32_t vaddr, uint32_t paddr, int count, uint32_t perm){
+int memory_create_map(pte_t * page_dir, uint32_t vaddr, uint32_t paddr, int count, uint32_t perm){
     for (int i = 0; i < count; i++)
     {
         pte_t * pte = find_pte(page_dir, vaddr, 1);                     // 1 如果未找到，则进行 PTE表的分配
@@ -200,7 +200,7 @@ uint32_t memory_create_uvm(void ){
 }
 
 int memory_alloc_for_page_dir(uint32_t page_dir, uint32_t vaddr, uint32_t size, int perm){
-    uint32_t curr_vaddr = vadr;
+    uint32_t curr_vaddr = vaddr;
     int page_count = up2(size, MEM_PAGE_SIZE) /  MEM_PAGE_SIZE;
 
     // 分配内存，逐页分配
@@ -212,7 +212,7 @@ int memory_alloc_for_page_dir(uint32_t page_dir, uint32_t vaddr, uint32_t size, 
             log_print("mem alloc error 1");
             return 0;
         }
-        int err = memory_create_map((pdt_t *)page_dir, curr_vaddr, paddr, 1, perm);
+        int err = memory_create_map((pde_t *)page_dir, curr_vaddr, paddr, 1, perm);
         if(err < 0){
             log_print("mem dir map error 1");
 
