@@ -28,14 +28,18 @@ typedef struct _task_t
     int time_ticks;
 
     char  name[TASK_NAME_SIZE];     // 任务名称
+    int pid;                        // process id 
+
     list_node_t run_node;           // 插入 ready_list
     list_node_t all_node;           // 插入 task_list
     list_node_t wait_node;          // 插入 wait_list
-
+    
     tss_t tss;
     int tss_sel;
     //  uint32_t * stack;
 }task_t;
+
+
 
 // 任务初始化 参数：入口地址 和 栈顶指针
 int task_init(task_t * task, const char * name,int flag, uint32_t entry, uint32_t esp);
@@ -77,6 +81,6 @@ void task_set_sleep(task_t * task, uint32_t ticks);     //. 将任务插入到�
 void task_set_wakeup(task_t * task);
 
 void sys_sleep(uint32_t ms);
-
+int sys_getpid(void);
 
 #endif

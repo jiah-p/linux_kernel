@@ -112,6 +112,8 @@ int task_init(task_t * task, const char * name, int flag, uint32_t entry, uint32
     irq_state_t state = irq_enter_protection();
     task_set_ready(task);
 
+    task->pid = (uint32_t)task;         // 也可以用个 static 值进行累加
+
     // 插入到 task_list
     list_insert_last(&task_mananger.task_list, &task->all_node);
     irq_leave_protection(state);
@@ -292,3 +294,9 @@ void sys_sleep(uint32_t ms){
 
     irq_leave_protection(state);
 }   
+
+int sys_getpid(void){
+    task_t * task = task_current();
+
+    return task->pid;
+}
