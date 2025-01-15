@@ -5,8 +5,9 @@
 
 #define SYS_SLEEP           0
 #define SYS_GETPID          1
-
+#define SYS_FORK            2
 #define SYS_PRINTMSG        100
+
 #define SYS_PARAM_COUNT     5
 
 typedef struct _syscall_args_t
@@ -76,6 +77,14 @@ static inline void print_msg(const char * fmt, int args){
     arg.arg0 = (int)fmt;
 
     arg.arg1 = args;
+
+    syscall(&arg);
+}
+
+static inline int fork(void){
+    syscall_args_t arg;
+
+    arg.id = SYS_FORK;
 
     syscall(&arg);
 }

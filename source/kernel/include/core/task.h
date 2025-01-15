@@ -29,7 +29,8 @@ typedef struct _task_t
 
     char  name[TASK_NAME_SIZE];     // 任务名称
     int pid;                        // process id 
-
+    struct _task_t * parent;
+    
     list_node_t run_node;           // 插入 ready_list
     list_node_t all_node;           // 插入 task_list
     list_node_t wait_node;          // 插入 wait_list
@@ -82,5 +83,6 @@ void task_set_wakeup(task_t * task);
 
 void sys_sleep(uint32_t ms);
 int sys_getpid(void);
+int sys_fork(void);
 
 #endif

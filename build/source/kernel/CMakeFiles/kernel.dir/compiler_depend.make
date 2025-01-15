@@ -33,7 +33,8 @@ source/kernel/CMakeFiles/kernel.dir/core/task.c.obj: ../source/kernel/core/task.
   ../source/kernel/include/cpu/mmu.h \
   ../source/kernel/include/core/memory.h \
   ../source/kernel/include/tools/bitmap.h \
-  ../source/kernel/include/ipc/mutex.h
+  ../source/kernel/include/ipc/mutex.h \
+  ../source/kernel/include/core/syscall.h
 
 source/kernel/CMakeFiles/kernel.dir/cpu/cpu.c.obj: ../source/kernel/cpu/cpu.c \
   ../source/kernel/include/cpu/cpu.h \

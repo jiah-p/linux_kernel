@@ -15,4 +15,5 @@ source/kernel/CMakeFiles/kernel.dir/core/task.c.obj: \
  C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/include/cpu/mmu.h \
  C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/include/core/memory.h \
  C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/include/tools/bitmap.h \
- C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/include/ipc/mutex.h
+ C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/include/ipc/mutex.h \
+ C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/include/core/syscall.h

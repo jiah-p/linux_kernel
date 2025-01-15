@@ -23,6 +23,7 @@
         "sem.h": "c",
         "mutex.h": "c",
         "memory.h": "c",
-        "syscall.h": "c"
+        "syscall.h": "c",
+        "bitmap.h": "c"
     },
 }

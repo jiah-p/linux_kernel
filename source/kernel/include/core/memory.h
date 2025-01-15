@@ -43,7 +43,7 @@ typedef  struct _memory_map_t
 }memory_map_t;
 
 void memory_init(boot_info_t * boot_info);
-int memory_create_map(pte_t * page_dir, uint32_t vaddr, uint32_t paddr, int count, uint32_t perm);
+int memory_create_map(pde_t * page_dir, uint32_t vaddr, uint32_t paddr, int count, uint32_t perm);
 
 uint32_t memory_create_uvm(void );
 
@@ -51,5 +51,8 @@ int memory_alloc_page_for(uint32_t addr, uint32_t size, uint32_t perm);
 
 uint32_t memory_alloc_page(void);
 void memory_free_page(uint32_t);
+
+uint32_t memory_copy_uvm(uint32_t page_dir);
+void memory_destory_uvm(uint32_t page_dir);
 
 #endif

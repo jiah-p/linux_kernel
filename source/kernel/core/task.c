@@ -6,8 +6,14 @@
 #include "cpu/irq.h"
 #include "cpu/mmu.h"
 #include "core/memory.h"
+#include "core/syscall.h"
 
 static task_mananger_t task_mananger;
+
+// task table 
+static task_t task_table[TASK_NR];
+// task table mutex
+static mutex_t task_table_mutex;
 
 static uint32_t idle_task_stack[IDLE_TASK_SIZE];          // 空闲进程栈空间
 
@@ -86,7 +92,7 @@ void task_set_block(task_t * task){
 
 int task_init(task_t * task, const char * name, int flag, uint32_t entry, uint32_t esp){
     ASSERT(task != (task_t * )0);
-
+    
     tss_init(task, flag, entry, esp);
     // uint32_t * pesp = (uint32_t *)esp;
     // edi esi ebx ebp 寄存器初始化
@@ -104,7 +110,7 @@ int task_init(task_t * task, const char * name, int flag, uint32_t entry, uint32
     task->time_ticks = TASK_TIME_SLICE_DEFAULT;
     task->sleep_ticks = 0;
     task->slice_ticks = task->time_ticks;
-
+    task->parent = (task_t *)0;
     list_node_init(&task->all_node);
     list_node_init(&task->run_node);
     list_node_init(&task->wait_node);
@@ -170,6 +176,9 @@ static void idle_task_entry(void){
 
 // 任务管理模块初始化
 void task_mananger_init(void){
+    kernel_memset(task_table, 0, sizeof(task_table));
+    mutex_init(&task_table_mutex);
+
     int sel = gdt_alloc_desc();
     segment_desc_set(sel, 0x000000000, 0xFFFFFFFF, SEG_P_PRESENT | SEG_DPL3 | SEG_TYPE_DATA | SEG_TYPE_RW | SEG_D);
 
@@ -300,3 +309,100 @@ int sys_getpid(void){
 
     return task->pid;
 }
+
+// task table alloc 
+static task_t * alloc_task(void){
+
+    task_t * task = (task_t *) 0;
+    
+    for(int i = 0; i < TASK_NR; i++){
+        task_t * cur = task_table + i;
+        if(cur->name[0] = '\0'){
+            task = cur;
+            break;
+        }
+        
+    }
+    return task;
+}
+
+// task table release
+static void release_task(task_t * task){
+    mutex_lock(&task_table_mutex);
+
+    task->name[0] = '\0';
+
+    mutex_unlock(&task_table_mutex);
+}
+
+void task_uninit(task_t * task){
+    if(task->tss_sel){
+        gdt_free_sel(task->tss_sel);
+    }
+    if(task->tss.eps0){
+        memory_free_page(task->tss.esp - MEM_PAGE_SIZE);
+    }
+
+    if(task->tss.cr3){
+        memory_destory_uvm(task->tss.cr3);
+    }
+
+    kernel_memset(task, 0, sizeof(task_t));
+}
+
+void free_task(task_t * task){
+
+}
+
+
+int sys_fork(void){
+    task_t * parent_task = task_current();
+
+    task_t * child_task = alloc_task();
+
+    if(child_task == (task_t * ) 0){
+        goto fork_failed;
+    }
+
+    syscall_frame_t * frame =  (syscall_frame_t *)(parent_task->tss.eps0 - sizeof(syscall_frame_t));
+    // 注意入口地址 和 esp 设置
+    int err = task_init(child_task, parent_task->name, 0, frame->eip, frame->esp + sizeof(uint32_t) * SYSCALL_PARAM_COUNT);
+    if(err < 0){
+        goto fork_failed;
+    }
+
+    // 
+    tss_t * tss = &child_task->tss;
+    tss->eax = 0;
+    tss->ebx = frame->ebx;
+    tss->ecx = frame->ecx;
+    tss->edx = frame->edx;
+    tss->esi = frame->esi;
+    tss->ebp = frame->ebp;
+
+    tss->cs = frame->cs;
+    tss->ds = frame->ds;
+    tss->es = frame->es;
+    tss->fs = frame->fs;
+    tss->gs = frame->gs;
+    tss->eflags = frame->eflags;
+
+    child_task->parent = parent_task;
+
+    if((tss->cr3 == memory_copy_uvm(parent_task->tss.cr3)) < 0){
+        goto fork_failed;
+    }
+
+    return child_task->pid;
+    
+fork_failed:
+    // 分配失败
+    if(child_task){
+        task_uninit(child_task);
+        free_task(child_task);
+
+    }
+
+    return -1;
+}
+

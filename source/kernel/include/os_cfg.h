@@ -14,4 +14,7 @@
 // 操作系统版本号
 #define OS_VERSION              "1.0.0"
 
+// task number
+#define TASK_NR                 128
+
 #endif 

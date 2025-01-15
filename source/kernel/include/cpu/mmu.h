@@ -6,6 +6,7 @@
 
 // 页表项数量
 #define PDE_CNT                 1024
+#define PTE_CNT                 1024
 #define PTE_P                   (1 << 0)
 #define PDE_P                   (1 << 0)
 
@@ -78,6 +79,11 @@ static inline uint32_t pde_paddr(pde_t * pde){
 
 static inline uint32_t pte_paddr(pte_t * pte){
     return pte->phy_page_addr << 12;
+}
+
+// 获取 pte 部分属性
+static inline uint32_t get_pte_perm(pte_t * pte){
+    return (pte->v & 0x3ff);
 }
 
 #endif
