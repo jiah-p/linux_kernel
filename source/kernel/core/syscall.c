@@ -1,5 +1,5 @@
 #include "core/syscall.h"
-#include "lib_syscall.h"
+#include "applib/lib_syscall.h"
 #include "core/task.h"
 #include "tools/log.h"
 
@@ -10,17 +10,18 @@ void sys_printmsg(const char * fmt, int arg){
 }
 
 // 转发表[系统调用]句柄
-static const sys_handler_t sys_table[] = {
-    [SYS_SLEEP] = (sys_handler_t)sys_sleep, 
-    [SYS_GETPID] = (sys_handler_t)sys_getpid,
-    [SYS_PRINTMSG] = (sys_handler_t)sys_printmsg;
-    [SYS_FORK] = (sys_handler_t)sys_fork;
+static const syscall_hanler_t sys_table[] = {
+    [SYS_SLEEP] = (syscall_hanler_t)sys_sleep, 
+    [SYS_GETPID] = (syscall_hanler_t)sys_getpid,
+    [SYS_PRINTMSG] = (syscall_hanler_t)sys_printmsg,
+    [SYS_FORK] = (syscall_hanler_t)sys_fork,
+    [SYS_EXECVE] = (syscall_hanler_t)sys_execve,
 };
 
 
 // 系统调用接口
 void do_handler_syscall(syscall_frame_t * frame){
-    if(frame->func_id < sizeof(sys_table) / sizeof(sys_handler_t)){
+    if(frame->func_id < sizeof(sys_table) / sizeof(syscall_hanler_t)){
         syscall_hanler_t handler = sys_table[frame->func_id];
         if(handler){
             // 返回值 本质 也是将值放到 eax寄存器中，然后再赋值给 ret 对象
@@ -29,7 +30,7 @@ void do_handler_syscall(syscall_frame_t * frame){
                 mov -0x4(%ebp), %eax
                 mov 0x4(%eax), %eax
             */
-            int ret = handler(arg0, arg1, arg2, arg3);     
+            int ret = handler(frame->arg0, frame->arg1, frame->arg2, frame->arg3);     
             // 将 ret 返回出去
             frame->eax = ret;
 

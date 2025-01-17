@@ -27,9 +27,6 @@
 
 .SUFFIXES: .hpux_make_needs_suffix_list
 
-# Produce verbose output by default.
-VERBOSE = 1
-
 # Command-line flag to silence nested $(MAKE).
 $(VERBOSE)MAKESILENT = -s
 
@@ -101,11 +98,26 @@ source/kernel/CMakeFiles/kernel.dir/core/memory.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/kernel.dir/core/memory.c.s"
 	cd C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/kernel && C:/x86_64-elf-tools-windows/bin/x86_64-elf-gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/core/memory.c -o CMakeFiles/kernel.dir/core/memory.c.s
 
+source/kernel/CMakeFiles/kernel.dir/core/syscall.c.obj: source/kernel/CMakeFiles/kernel.dir/flags.make
+source/kernel/CMakeFiles/kernel.dir/core/syscall.c.obj: source/kernel/CMakeFiles/kernel.dir/includes_C.rsp
+source/kernel/CMakeFiles/kernel.dir/core/syscall.c.obj: ../source/kernel/core/syscall.c
+source/kernel/CMakeFiles/kernel.dir/core/syscall.c.obj: source/kernel/CMakeFiles/kernel.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object source/kernel/CMakeFiles/kernel.dir/core/syscall.c.obj"
+	cd C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/kernel && C:/x86_64-elf-tools-windows/bin/x86_64-elf-gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT source/kernel/CMakeFiles/kernel.dir/core/syscall.c.obj -MF CMakeFiles/kernel.dir/core/syscall.c.obj.d -o CMakeFiles/kernel.dir/core/syscall.c.obj -c C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/core/syscall.c
+
+source/kernel/CMakeFiles/kernel.dir/core/syscall.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/kernel.dir/core/syscall.c.i"
+	cd C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/kernel && C:/x86_64-elf-tools-windows/bin/x86_64-elf-gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/core/syscall.c > CMakeFiles/kernel.dir/core/syscall.c.i
+
+source/kernel/CMakeFiles/kernel.dir/core/syscall.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/kernel.dir/core/syscall.c.s"
+	cd C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/kernel && C:/x86_64-elf-tools-windows/bin/x86_64-elf-gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/core/syscall.c -o CMakeFiles/kernel.dir/core/syscall.c.s
+
 source/kernel/CMakeFiles/kernel.dir/core/task.c.obj: source/kernel/CMakeFiles/kernel.dir/flags.make
 source/kernel/CMakeFiles/kernel.dir/core/task.c.obj: source/kernel/CMakeFiles/kernel.dir/includes_C.rsp
 source/kernel/CMakeFiles/kernel.dir/core/task.c.obj: ../source/kernel/core/task.c
 source/kernel/CMakeFiles/kernel.dir/core/task.c.obj: source/kernel/CMakeFiles/kernel.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object source/kernel/CMakeFiles/kernel.dir/core/task.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object source/kernel/CMakeFiles/kernel.dir/core/task.c.obj"
 	cd C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/kernel && C:/x86_64-elf-tools-windows/bin/x86_64-elf-gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT source/kernel/CMakeFiles/kernel.dir/core/task.c.obj -MF CMakeFiles/kernel.dir/core/task.c.obj.d -o CMakeFiles/kernel.dir/core/task.c.obj -c C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/core/task.c
 
 source/kernel/CMakeFiles/kernel.dir/core/task.c.i: cmake_force
@@ -120,7 +132,7 @@ source/kernel/CMakeFiles/kernel.dir/cpu/cpu.c.obj: source/kernel/CMakeFiles/kern
 source/kernel/CMakeFiles/kernel.dir/cpu/cpu.c.obj: source/kernel/CMakeFiles/kernel.dir/includes_C.rsp
 source/kernel/CMakeFiles/kernel.dir/cpu/cpu.c.obj: ../source/kernel/cpu/cpu.c
 source/kernel/CMakeFiles/kernel.dir/cpu/cpu.c.obj: source/kernel/CMakeFiles/kernel.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object source/kernel/CMakeFiles/kernel.dir/cpu/cpu.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object source/kernel/CMakeFiles/kernel.dir/cpu/cpu.c.obj"
 	cd C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/kernel && C:/x86_64-elf-tools-windows/bin/x86_64-elf-gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT source/kernel/CMakeFiles/kernel.dir/cpu/cpu.c.obj -MF CMakeFiles/kernel.dir/cpu/cpu.c.obj.d -o CMakeFiles/kernel.dir/cpu/cpu.c.obj -c C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/cpu/cpu.c
 
 source/kernel/CMakeFiles/kernel.dir/cpu/cpu.c.i: cmake_force
@@ -135,7 +147,7 @@ source/kernel/CMakeFiles/kernel.dir/cpu/irq.c.obj: source/kernel/CMakeFiles/kern
 source/kernel/CMakeFiles/kernel.dir/cpu/irq.c.obj: source/kernel/CMakeFiles/kernel.dir/includes_C.rsp
 source/kernel/CMakeFiles/kernel.dir/cpu/irq.c.obj: ../source/kernel/cpu/irq.c
 source/kernel/CMakeFiles/kernel.dir/cpu/irq.c.obj: source/kernel/CMakeFiles/kernel.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object source/kernel/CMakeFiles/kernel.dir/cpu/irq.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object source/kernel/CMakeFiles/kernel.dir/cpu/irq.c.obj"
 	cd C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/kernel && C:/x86_64-elf-tools-windows/bin/x86_64-elf-gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT source/kernel/CMakeFiles/kernel.dir/cpu/irq.c.obj -MF CMakeFiles/kernel.dir/cpu/irq.c.obj.d -o CMakeFiles/kernel.dir/cpu/irq.c.obj -c C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/cpu/irq.c
 
 source/kernel/CMakeFiles/kernel.dir/cpu/irq.c.i: cmake_force
@@ -150,7 +162,7 @@ source/kernel/CMakeFiles/kernel.dir/dev/time.c.obj: source/kernel/CMakeFiles/ker
 source/kernel/CMakeFiles/kernel.dir/dev/time.c.obj: source/kernel/CMakeFiles/kernel.dir/includes_C.rsp
 source/kernel/CMakeFiles/kernel.dir/dev/time.c.obj: ../source/kernel/dev/time.c
 source/kernel/CMakeFiles/kernel.dir/dev/time.c.obj: source/kernel/CMakeFiles/kernel.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object source/kernel/CMakeFiles/kernel.dir/dev/time.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object source/kernel/CMakeFiles/kernel.dir/dev/time.c.obj"
 	cd C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/kernel && C:/x86_64-elf-tools-windows/bin/x86_64-elf-gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT source/kernel/CMakeFiles/kernel.dir/dev/time.c.obj -MF CMakeFiles/kernel.dir/dev/time.c.obj.d -o CMakeFiles/kernel.dir/dev/time.c.obj -c C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/dev/time.c
 
 source/kernel/CMakeFiles/kernel.dir/dev/time.c.i: cmake_force
@@ -161,10 +173,25 @@ source/kernel/CMakeFiles/kernel.dir/dev/time.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/kernel.dir/dev/time.c.s"
 	cd C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/kernel && C:/x86_64-elf-tools-windows/bin/x86_64-elf-gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/dev/time.c -o CMakeFiles/kernel.dir/dev/time.c.s
 
+source/kernel/CMakeFiles/kernel.dir/fs/fs.c.obj: source/kernel/CMakeFiles/kernel.dir/flags.make
+source/kernel/CMakeFiles/kernel.dir/fs/fs.c.obj: source/kernel/CMakeFiles/kernel.dir/includes_C.rsp
+source/kernel/CMakeFiles/kernel.dir/fs/fs.c.obj: ../source/kernel/fs/fs.c
+source/kernel/CMakeFiles/kernel.dir/fs/fs.c.obj: source/kernel/CMakeFiles/kernel.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object source/kernel/CMakeFiles/kernel.dir/fs/fs.c.obj"
+	cd C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/kernel && C:/x86_64-elf-tools-windows/bin/x86_64-elf-gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT source/kernel/CMakeFiles/kernel.dir/fs/fs.c.obj -MF CMakeFiles/kernel.dir/fs/fs.c.obj.d -o CMakeFiles/kernel.dir/fs/fs.c.obj -c C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/fs/fs.c
+
+source/kernel/CMakeFiles/kernel.dir/fs/fs.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/kernel.dir/fs/fs.c.i"
+	cd C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/kernel && C:/x86_64-elf-tools-windows/bin/x86_64-elf-gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/fs/fs.c > CMakeFiles/kernel.dir/fs/fs.c.i
+
+source/kernel/CMakeFiles/kernel.dir/fs/fs.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/kernel.dir/fs/fs.c.s"
+	cd C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/kernel && C:/x86_64-elf-tools-windows/bin/x86_64-elf-gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/fs/fs.c -o CMakeFiles/kernel.dir/fs/fs.c.s
+
 source/kernel/CMakeFiles/kernel.dir/init/first_task_entry.S.obj: source/kernel/CMakeFiles/kernel.dir/flags.make
 source/kernel/CMakeFiles/kernel.dir/init/first_task_entry.S.obj: source/kernel/CMakeFiles/kernel.dir/includes_ASM.rsp
 source/kernel/CMakeFiles/kernel.dir/init/first_task_entry.S.obj: ../source/kernel/init/first_task_entry.S
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building ASM object source/kernel/CMakeFiles/kernel.dir/init/first_task_entry.S.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building ASM object source/kernel/CMakeFiles/kernel.dir/init/first_task_entry.S.obj"
 	cd C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/kernel && C:/x86_64-elf-tools-windows/bin/x86_64-elf-gcc.exe $(ASM_DEFINES) $(ASM_INCLUDES) $(ASM_FLAGS) -o CMakeFiles/kernel.dir/init/first_task_entry.S.obj -c C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/init/first_task_entry.S
 
 source/kernel/CMakeFiles/kernel.dir/init/first_task_entry.S.i: cmake_force
@@ -179,7 +206,7 @@ source/kernel/CMakeFiles/kernel.dir/init/fisrt_task.c.obj: source/kernel/CMakeFi
 source/kernel/CMakeFiles/kernel.dir/init/fisrt_task.c.obj: source/kernel/CMakeFiles/kernel.dir/includes_C.rsp
 source/kernel/CMakeFiles/kernel.dir/init/fisrt_task.c.obj: ../source/kernel/init/fisrt_task.c
 source/kernel/CMakeFiles/kernel.dir/init/fisrt_task.c.obj: source/kernel/CMakeFiles/kernel.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object source/kernel/CMakeFiles/kernel.dir/init/fisrt_task.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building C object source/kernel/CMakeFiles/kernel.dir/init/fisrt_task.c.obj"
 	cd C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/kernel && C:/x86_64-elf-tools-windows/bin/x86_64-elf-gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT source/kernel/CMakeFiles/kernel.dir/init/fisrt_task.c.obj -MF CMakeFiles/kernel.dir/init/fisrt_task.c.obj.d -o CMakeFiles/kernel.dir/init/fisrt_task.c.obj -c C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/init/fisrt_task.c
 
 source/kernel/CMakeFiles/kernel.dir/init/fisrt_task.c.i: cmake_force
@@ -194,7 +221,7 @@ source/kernel/CMakeFiles/kernel.dir/init/init.c.obj: source/kernel/CMakeFiles/ke
 source/kernel/CMakeFiles/kernel.dir/init/init.c.obj: source/kernel/CMakeFiles/kernel.dir/includes_C.rsp
 source/kernel/CMakeFiles/kernel.dir/init/init.c.obj: ../source/kernel/init/init.c
 source/kernel/CMakeFiles/kernel.dir/init/init.c.obj: source/kernel/CMakeFiles/kernel.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building C object source/kernel/CMakeFiles/kernel.dir/init/init.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building C object source/kernel/CMakeFiles/kernel.dir/init/init.c.obj"
 	cd C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/kernel && C:/x86_64-elf-tools-windows/bin/x86_64-elf-gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT source/kernel/CMakeFiles/kernel.dir/init/init.c.obj -MF CMakeFiles/kernel.dir/init/init.c.obj.d -o CMakeFiles/kernel.dir/init/init.c.obj -c C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/init/init.c
 
 source/kernel/CMakeFiles/kernel.dir/init/init.c.i: cmake_force
@@ -209,7 +236,7 @@ source/kernel/CMakeFiles/kernel.dir/ipc/mutex.c.obj: source/kernel/CMakeFiles/ke
 source/kernel/CMakeFiles/kernel.dir/ipc/mutex.c.obj: source/kernel/CMakeFiles/kernel.dir/includes_C.rsp
 source/kernel/CMakeFiles/kernel.dir/ipc/mutex.c.obj: ../source/kernel/ipc/mutex.c
 source/kernel/CMakeFiles/kernel.dir/ipc/mutex.c.obj: source/kernel/CMakeFiles/kernel.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building C object source/kernel/CMakeFiles/kernel.dir/ipc/mutex.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building C object source/kernel/CMakeFiles/kernel.dir/ipc/mutex.c.obj"
 	cd C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/kernel && C:/x86_64-elf-tools-windows/bin/x86_64-elf-gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT source/kernel/CMakeFiles/kernel.dir/ipc/mutex.c.obj -MF CMakeFiles/kernel.dir/ipc/mutex.c.obj.d -o CMakeFiles/kernel.dir/ipc/mutex.c.obj -c C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/ipc/mutex.c
 
 source/kernel/CMakeFiles/kernel.dir/ipc/mutex.c.i: cmake_force
@@ -224,7 +251,7 @@ source/kernel/CMakeFiles/kernel.dir/ipc/sem.c.obj: source/kernel/CMakeFiles/kern
 source/kernel/CMakeFiles/kernel.dir/ipc/sem.c.obj: source/kernel/CMakeFiles/kernel.dir/includes_C.rsp
 source/kernel/CMakeFiles/kernel.dir/ipc/sem.c.obj: ../source/kernel/ipc/sem.c
 source/kernel/CMakeFiles/kernel.dir/ipc/sem.c.obj: source/kernel/CMakeFiles/kernel.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building C object source/kernel/CMakeFiles/kernel.dir/ipc/sem.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building C object source/kernel/CMakeFiles/kernel.dir/ipc/sem.c.obj"
 	cd C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/kernel && C:/x86_64-elf-tools-windows/bin/x86_64-elf-gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT source/kernel/CMakeFiles/kernel.dir/ipc/sem.c.obj -MF CMakeFiles/kernel.dir/ipc/sem.c.obj.d -o CMakeFiles/kernel.dir/ipc/sem.c.obj -c C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/ipc/sem.c
 
 source/kernel/CMakeFiles/kernel.dir/ipc/sem.c.i: cmake_force
@@ -239,7 +266,7 @@ source/kernel/CMakeFiles/kernel.dir/tools/bitmap.c.obj: source/kernel/CMakeFiles
 source/kernel/CMakeFiles/kernel.dir/tools/bitmap.c.obj: source/kernel/CMakeFiles/kernel.dir/includes_C.rsp
 source/kernel/CMakeFiles/kernel.dir/tools/bitmap.c.obj: ../source/kernel/tools/bitmap.c
 source/kernel/CMakeFiles/kernel.dir/tools/bitmap.c.obj: source/kernel/CMakeFiles/kernel.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building C object source/kernel/CMakeFiles/kernel.dir/tools/bitmap.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building C object source/kernel/CMakeFiles/kernel.dir/tools/bitmap.c.obj"
 	cd C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/kernel && C:/x86_64-elf-tools-windows/bin/x86_64-elf-gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT source/kernel/CMakeFiles/kernel.dir/tools/bitmap.c.obj -MF CMakeFiles/kernel.dir/tools/bitmap.c.obj.d -o CMakeFiles/kernel.dir/tools/bitmap.c.obj -c C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/tools/bitmap.c
 
 source/kernel/CMakeFiles/kernel.dir/tools/bitmap.c.i: cmake_force
@@ -254,7 +281,7 @@ source/kernel/CMakeFiles/kernel.dir/tools/klib.c.obj: source/kernel/CMakeFiles/k
 source/kernel/CMakeFiles/kernel.dir/tools/klib.c.obj: source/kernel/CMakeFiles/kernel.dir/includes_C.rsp
 source/kernel/CMakeFiles/kernel.dir/tools/klib.c.obj: ../source/kernel/tools/klib.c
 source/kernel/CMakeFiles/kernel.dir/tools/klib.c.obj: source/kernel/CMakeFiles/kernel.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building C object source/kernel/CMakeFiles/kernel.dir/tools/klib.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building C object source/kernel/CMakeFiles/kernel.dir/tools/klib.c.obj"
 	cd C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/kernel && C:/x86_64-elf-tools-windows/bin/x86_64-elf-gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT source/kernel/CMakeFiles/kernel.dir/tools/klib.c.obj -MF CMakeFiles/kernel.dir/tools/klib.c.obj.d -o CMakeFiles/kernel.dir/tools/klib.c.obj -c C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/tools/klib.c
 
 source/kernel/CMakeFiles/kernel.dir/tools/klib.c.i: cmake_force
@@ -269,7 +296,7 @@ source/kernel/CMakeFiles/kernel.dir/tools/list.c.obj: source/kernel/CMakeFiles/k
 source/kernel/CMakeFiles/kernel.dir/tools/list.c.obj: source/kernel/CMakeFiles/kernel.dir/includes_C.rsp
 source/kernel/CMakeFiles/kernel.dir/tools/list.c.obj: ../source/kernel/tools/list.c
 source/kernel/CMakeFiles/kernel.dir/tools/list.c.obj: source/kernel/CMakeFiles/kernel.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building C object source/kernel/CMakeFiles/kernel.dir/tools/list.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building C object source/kernel/CMakeFiles/kernel.dir/tools/list.c.obj"
 	cd C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/kernel && C:/x86_64-elf-tools-windows/bin/x86_64-elf-gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT source/kernel/CMakeFiles/kernel.dir/tools/list.c.obj -MF CMakeFiles/kernel.dir/tools/list.c.obj.d -o CMakeFiles/kernel.dir/tools/list.c.obj -c C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/tools/list.c
 
 source/kernel/CMakeFiles/kernel.dir/tools/list.c.i: cmake_force
@@ -284,7 +311,7 @@ source/kernel/CMakeFiles/kernel.dir/tools/log.c.obj: source/kernel/CMakeFiles/ke
 source/kernel/CMakeFiles/kernel.dir/tools/log.c.obj: source/kernel/CMakeFiles/kernel.dir/includes_C.rsp
 source/kernel/CMakeFiles/kernel.dir/tools/log.c.obj: ../source/kernel/tools/log.c
 source/kernel/CMakeFiles/kernel.dir/tools/log.c.obj: source/kernel/CMakeFiles/kernel.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building C object source/kernel/CMakeFiles/kernel.dir/tools/log.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building C object source/kernel/CMakeFiles/kernel.dir/tools/log.c.obj"
 	cd C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/kernel && C:/x86_64-elf-tools-windows/bin/x86_64-elf-gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT source/kernel/CMakeFiles/kernel.dir/tools/log.c.obj -MF CMakeFiles/kernel.dir/tools/log.c.obj.d -o CMakeFiles/kernel.dir/tools/log.c.obj -c C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/tools/log.c
 
 source/kernel/CMakeFiles/kernel.dir/tools/log.c.i: cmake_force
@@ -299,10 +326,12 @@ source/kernel/CMakeFiles/kernel.dir/tools/log.c.s: cmake_force
 kernel_OBJECTS = \
 "CMakeFiles/kernel.dir/init/start.S.obj" \
 "CMakeFiles/kernel.dir/core/memory.c.obj" \
+"CMakeFiles/kernel.dir/core/syscall.c.obj" \
 "CMakeFiles/kernel.dir/core/task.c.obj" \
 "CMakeFiles/kernel.dir/cpu/cpu.c.obj" \
 "CMakeFiles/kernel.dir/cpu/irq.c.obj" \
 "CMakeFiles/kernel.dir/dev/time.c.obj" \
+"CMakeFiles/kernel.dir/fs/fs.c.obj" \
 "CMakeFiles/kernel.dir/init/first_task_entry.S.obj" \
 "CMakeFiles/kernel.dir/init/fisrt_task.c.obj" \
 "CMakeFiles/kernel.dir/init/init.c.obj" \
@@ -318,10 +347,12 @@ kernel_EXTERNAL_OBJECTS =
 
 source/kernel/kernel.exe: source/kernel/CMakeFiles/kernel.dir/init/start.S.obj
 source/kernel/kernel.exe: source/kernel/CMakeFiles/kernel.dir/core/memory.c.obj
+source/kernel/kernel.exe: source/kernel/CMakeFiles/kernel.dir/core/syscall.c.obj
 source/kernel/kernel.exe: source/kernel/CMakeFiles/kernel.dir/core/task.c.obj
 source/kernel/kernel.exe: source/kernel/CMakeFiles/kernel.dir/cpu/cpu.c.obj
 source/kernel/kernel.exe: source/kernel/CMakeFiles/kernel.dir/cpu/irq.c.obj
 source/kernel/kernel.exe: source/kernel/CMakeFiles/kernel.dir/dev/time.c.obj
+source/kernel/kernel.exe: source/kernel/CMakeFiles/kernel.dir/fs/fs.c.obj
 source/kernel/kernel.exe: source/kernel/CMakeFiles/kernel.dir/init/first_task_entry.S.obj
 source/kernel/kernel.exe: source/kernel/CMakeFiles/kernel.dir/init/fisrt_task.c.obj
 source/kernel/kernel.exe: source/kernel/CMakeFiles/kernel.dir/init/init.c.obj
@@ -334,7 +365,7 @@ source/kernel/kernel.exe: source/kernel/CMakeFiles/kernel.dir/tools/log.c.obj
 source/kernel/kernel.exe: source/kernel/CMakeFiles/kernel.dir/build.make
 source/kernel/kernel.exe: source/kernel/CMakeFiles/kernel.dir/linklibs.rsp
 source/kernel/kernel.exe: source/kernel/CMakeFiles/kernel.dir/objects1.rsp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Linking C executable kernel.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Linking C executable kernel.exe"
 	cd C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/kernel && x86_64-elf-ld @CMakeFiles/kernel.dir/objects1.rsp -m elf_i386 -T C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/kernel.lds -o C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/kernel/kernel.elf
 	cd C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/kernel && x86_64-elf-objcopy -S kernel.elf C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/../../image/kernel.bin
 	cd C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/kernel && x86_64-elf-objdump -x -d -S -m i386 C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/kernel/kernel.elf > kernel_dis.txt

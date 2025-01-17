@@ -13,7 +13,7 @@ fi
 
 if [ ! -f "disk2.dmg" ]; then
     echo "找不到disk2.vhd，请从课程提供的百度网盘链接上下载放到image目录下"
-    exit
+    exit 
 fi
 
 

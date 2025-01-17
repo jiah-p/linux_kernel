@@ -22,10 +22,12 @@ set(CMAKE_ASM_TARGET_INCLUDE_PATH
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/core/memory.c" "source/kernel/CMakeFiles/kernel.dir/core/memory.c.obj" "gcc" "source/kernel/CMakeFiles/kernel.dir/core/memory.c.obj.d"
+  "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/core/syscall.c" "source/kernel/CMakeFiles/kernel.dir/core/syscall.c.obj" "gcc" "source/kernel/CMakeFiles/kernel.dir/core/syscall.c.obj.d"
   "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/core/task.c" "source/kernel/CMakeFiles/kernel.dir/core/task.c.obj" "gcc" "source/kernel/CMakeFiles/kernel.dir/core/task.c.obj.d"
   "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/cpu/cpu.c" "source/kernel/CMakeFiles/kernel.dir/cpu/cpu.c.obj" "gcc" "source/kernel/CMakeFiles/kernel.dir/cpu/cpu.c.obj.d"
   "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/cpu/irq.c" "source/kernel/CMakeFiles/kernel.dir/cpu/irq.c.obj" "gcc" "source/kernel/CMakeFiles/kernel.dir/cpu/irq.c.obj.d"
   "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/dev/time.c" "source/kernel/CMakeFiles/kernel.dir/dev/time.c.obj" "gcc" "source/kernel/CMakeFiles/kernel.dir/dev/time.c.obj.d"
+  "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/fs/fs.c" "source/kernel/CMakeFiles/kernel.dir/fs/fs.c.obj" "gcc" "source/kernel/CMakeFiles/kernel.dir/fs/fs.c.obj.d"
   "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/init/fisrt_task.c" "source/kernel/CMakeFiles/kernel.dir/init/fisrt_task.c.obj" "gcc" "source/kernel/CMakeFiles/kernel.dir/init/fisrt_task.c.obj.d"
   "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/init/init.c" "source/kernel/CMakeFiles/kernel.dir/init/init.c.obj" "gcc" "source/kernel/CMakeFiles/kernel.dir/init/init.c.obj.d"
   "C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/kernel/ipc/mutex.c" "source/kernel/CMakeFiles/kernel.dir/ipc/mutex.c.obj" "gcc" "source/kernel/CMakeFiles/kernel.dir/ipc/mutex.c.obj.d"

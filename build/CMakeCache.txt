@@ -52,8 +52,8 @@ CMAKE_COLOR_MAKEFILE:BOOL=ON
 //No help, variable specified on the command line.
 CMAKE_CXX_COMPILER:FILEPATH=C:/x86_64-elf-tools-windows/bin/x86_64-elf-g++.exe
 
-//No help, variable specified on the command line.
-CMAKE_C_COMPILER:FILEPATH=C:/x86_64-elf-tools-windows/bin/x86_64-elf-gcc.exe
+//C compiler
+CMAKE_C_COMPILER:STRING=C:/x86_64-elf-tools-windows/bin/x86_64-elf-gcc.exe
 
 //A wrapper around 'ar' adding the appropriate '--plugin' option
 // for the GCC compiler
@@ -265,6 +265,15 @@ os_IS_TOP_LEVEL:STATIC=ON
 //Value Computed by CMake
 os_SOURCE_DIR:STATIC=C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start
 
+//Value Computed by CMake
+shell_BINARY_DIR:STATIC=C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/shell
+
+//Value Computed by CMake
+shell_IS_TOP_LEVEL:STATIC=OFF
+
+//Value Computed by CMake
+shell_SOURCE_DIR:STATIC=C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/source/shell
+
 
 ########################
 # INTERNAL cache entries
@@ -369,7 +378,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=4
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=5
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP

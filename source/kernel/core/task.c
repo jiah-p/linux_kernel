@@ -7,6 +7,9 @@
 #include "cpu/mmu.h"
 #include "core/memory.h"
 #include "core/syscall.h"
+#include "comm/elf.h"
+#include "fs/fs.h"
+
 
 static task_mananger_t task_mananger;
 
@@ -161,7 +164,7 @@ void task_first_init(void){
     mmu_set_page_dir(task_mananger.first_task.tss.cr3);
 
 
-    memory_alloc_page_for(first_task_entry, alloc_size, PTE_P | PTE_W | PTE_U);
+    memory_alloc_page_for((uint32_t)first_task_entry, alloc_size, PTE_P | PTE_W | PTE_U);
 
     kernel_memcpy((void *)first_start, (void *)s_first_task, copy_size);
     
@@ -406,3 +409,142 @@ fork_failed:
     return -1;
 }
 
+
+
+static  int load_phdr(int file, Elf32_phdr * phdr, uint32_t page_dir){
+    int err = memory_alloc_for_page_dir(page_dir, phdr->p_vaddr, phdr->p_memsz, PTE_P | PTE_U | PTE_W);
+    if(err < 0){
+        log_print("no memory.");
+        return -1;
+    }
+
+    if(sys_lseek(file, phdr->p_offset, 0) < 0){
+        log_print("read file failed");
+        return -1;
+    }
+
+    uint32_t vaddr = phdr->p_vaddr;
+    uint32_t size = phdr->p_filesz;
+
+    while (size > 0)
+    {       
+        int cur_size = (size > MEM_PAGE_SIZE) ? MEM_PAGE_SIZE : size;
+        // vaddr 在 page_dir 中对应的物理地址
+        uint32_t paddr = memory_get_paddr(page_dir, vaddr);
+
+        // 0x1000 - 0x1000
+        if(sys_read(file, (char *)paddr, cur_size) < cur_size){
+            log_print("read file failed");
+            return -1;
+        }
+
+        size -= cur_size;
+        vaddr += cur_size;
+    }
+
+    return 0;
+}
+
+static uint32_t load_elf_file(task_t * task, const char * name, uint32_t page_dir){
+    Elf32_Ehdr elf_hdr;
+    Elf32_phdr elf_phdr;
+
+    int file = sys_open(name, 0);
+
+    if(file == 0){
+        log_print("open failed, %s",name);
+        goto load_failed;
+    }
+
+    int cnt = sys_read(file, (char *)&elf_hdr, sizeof(elf_hdr));
+
+    if(cnt < sizeof(Elf32_Ehdr)){
+        log_print("elf hdr too small, size is %d", cnt);
+        goto load_failed;
+    }
+    if((elf_hdr.e_ident[0] != 0x7F) || (elf_hdr.e_ident[1] != 'E') || (elf_hdr.e_ident[2] != 'L') 
+    || (elf_hdr.e_ident[3] != 'F')){
+        log_print("check elf ident failed.");
+        goto load_failed;
+    }
+
+    uint32_t e_phoff = elf_hdr.e_phoff;
+    for(int i = 0; i < elf_hdr.e_phnum; i++, e_phoff += elf_hdr.e_phentsize){
+        if(sys_lseek(file, e_phoff, 0) < 0){
+            log_print("read file failed.");
+            goto load_failed;
+        }
+
+        cnt = sys_read(file, (char *)&elf_phdr, sizeof(elf_phdr));
+        if(cnt < sizeof(elf_phdr)){
+            log_print("read file failed.");
+            goto load_failed;
+        }
+
+        // 解析表头
+        if((elf_phdr.p_type != 1) || (elf_phdr.p_vaddr < MEMORY_TASK_BASE)){
+            continue;
+        }
+
+
+        // 加载表项对应的内容区域到内存
+        int err = load_phdr(file, &elf_phdr,  page_dir);
+        if(err < 0){
+            log_print("load program failed.");
+            goto load_failed;
+        }
+    }
+
+    sys_close(file);
+    return elf_hdr.e_entry;
+
+load_failed:
+    if(file){
+        sys_close(file);
+    }
+
+    return 0;
+}
+
+int sys_execve(char * name, char ** argv, char ** env){
+    task_t * task = task_current();
+    uint32_t old_page_dir = task->tss.cr3;
+
+    uint32_t new_page_dir = memory_create_uvm();
+    if(!new_page_dir){
+        goto exec_failed;
+    }
+    uint32_t entry = load_elf_file(task, name, new_page_dir);
+
+    if(entry == 0){
+        goto exec_failed;
+    }
+
+    uint32_t stack_top = MEM_TASK_STACK_TOP;
+    int err = memory_alloc_for_page_dir(new_page_dir, MEM_TASK_STACK_TOP - MEM_TASK_STACK_SIZE, MEM_TASK_STACK_SIZE, PTE_P | PTE_U | PTE_W);
+    if(err < 0){
+        log_print("memory alloc failed.");
+        goto exec_failed;
+    }
+
+    syscall_frame_t * frame = (syscall_frame_t *)(task->tss.eps0 - sizeof(syscall_frame_t));
+    frame->eip = entry;
+    frame->eax = frame->ebp = frame->ebx = frame->edx = frame->esi = frame->edi = frame->ecx = 0;
+    frame->eflags = EFLAGS_IF | EFLAGS_DEFAULT;
+    frame->esp = stack_top;
+
+    task->tss.cr3 = new_page_dir;
+    mmu_set_page_dir(new_page_dir);
+    memory_destory_uvm(old_page_dir);
+
+    return 0;
+
+exec_failed:
+    if( new_page_dir != 0){
+        task->tss.cr3 = old_page_dir;
+        mmu_set_page_dir(old_page_dir);
+        memory_destory_uvm(new_page_dir);
+    }
+
+    return -1;
+}

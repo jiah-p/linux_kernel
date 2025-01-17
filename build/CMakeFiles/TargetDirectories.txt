@@ -9,3 +9,6 @@ C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/lo
 C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/kernel/CMakeFiles/kernel.dir
 C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/kernel/CMakeFiles/edit_cache.dir
 C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/kernel/CMakeFiles/rebuild_cache.dir
+C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/shell/CMakeFiles/shell.dir
+C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/shell/CMakeFiles/edit_cache.dir
+C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/shell/CMakeFiles/rebuild_cache.dir

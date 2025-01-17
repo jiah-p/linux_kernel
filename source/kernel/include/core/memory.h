@@ -17,7 +17,9 @@
 #define MEM_PAGE_SIZE              4096                        // 4KB                 
 #define MEM_EBDA_START             0x80000
 #define MEMORY_TASK_BASE           0x80000000
-#define MEM_EXT_END                (127 * 1024 * 1024)         // 操作内存空间的末尾
+#define MEM_EXT_END                (127 * 1024 * 1024)         // 操作内存空间的 末尾
+#define MEM_TASK_STACK_TOP         0xE0000000
+#define MEM_TASK_STACK_SIZE        (MEM_PAGE_SIZE * 500)
 
 typedef struct _addr_alloc_t{
     bitmap_t bitmap;
@@ -48,11 +50,15 @@ int memory_create_map(pde_t * page_dir, uint32_t vaddr, uint32_t paddr, int coun
 uint32_t memory_create_uvm(void );
 
 int memory_alloc_page_for(uint32_t addr, uint32_t size, uint32_t perm);
+int memory_alloc_for_page_dir(uint32_t page_dir, uint32_t vaddr, uint32_t size, int perm);
 
 uint32_t memory_alloc_page(void);
 void memory_free_page(uint32_t);
 
 uint32_t memory_copy_uvm(uint32_t page_dir);
 void memory_destory_uvm(uint32_t page_dir);
+
+// 返回 vaddr 在 page_dir中对应的 paddr
+uint32_t memory_get_paddr(uint32_t page_dir, uint32_t vaddr);
 
 #endif

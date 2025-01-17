@@ -2,10 +2,12 @@
 #define __LIB_SYSCALL__
 
 #include "os_cfg.h"
+#include "comm./types.h"
 
 #define SYS_SLEEP           0
 #define SYS_GETPID          1
 #define SYS_FORK            2
+#define SYS_EXECVE          3
 #define SYS_PRINTMSG        100
 
 #define SYS_PARAM_COUNT     5
@@ -85,6 +87,18 @@ static inline int fork(void){
     syscall_args_t arg;
 
     arg.id = SYS_FORK;
+
+    syscall(&arg);
+}
+
+static inline int execve(const char * name, char * const * argv, char * const * env){
+    syscall_args_t arg;
+
+    arg.id = SYS_EXECVE;
+    arg.arg0 = (int)name;
+
+    arg.arg1 = argv;
+    arg.arg2 = env;
 
     syscall(&arg);
 }

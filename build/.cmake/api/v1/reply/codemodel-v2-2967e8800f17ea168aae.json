@@ -10,7 +10,8 @@
 					[
 						1,
 						2,
-						3
+						3,
+						4
 					],
 					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
 					"minimumCMakeVersion" : 
@@ -64,6 +65,21 @@
 					[
 						1
 					]
+				},
+				{
+					"build" : "source/shell",
+					"jsonFile" : "directory-source.shell-Debug-9bcd9f15bf3fe254031f.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.0.0"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 4,
+					"source" : "source/shell",
+					"targetIndexes" : 
+					[
+						3
+					]
 				}
 			],
 			"name" : "Debug",
@@ -74,7 +90,8 @@
 					[
 						1,
 						2,
-						3
+						3,
+						4
 					],
 					"directoryIndexes" : 
 					[
@@ -117,6 +134,18 @@
 					[
 						1
 					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						4
+					],
+					"name" : "shell",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						3
+					]
 				}
 			],
 			"targets" : 
@@ -131,7 +160,7 @@
 				{
 					"directoryIndex" : 3,
 					"id" : "kernel::@483af936ae9a949d521e",
-					"jsonFile" : "target-kernel-Debug-76a066a4b82e85e178c1.json",
+					"jsonFile" : "target-kernel-Debug-5b9458f594b31337422c.json",
 					"name" : "kernel",
 					"projectIndex" : 3
 				},
@@ -141,6 +170,13 @@
 					"jsonFile" : "target-loader-Debug-05df672ad45da26d7c8d.json",
 					"name" : "loader",
 					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "shell::@3c59f89bbaefae7d5c66",
+					"jsonFile" : "target-shell-Debug-45b362e8c2a8e312bee6.json",
+					"name" : "shell",
+					"projectIndex" : 4
 				}
 			]
 		}

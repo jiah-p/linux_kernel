@@ -329,3 +329,13 @@ void memory_destory_uvm(uint32_t page_dir){
    addr_free_page(&paddr_alloc, page_dir, 1);
 
 }
+
+uint32_t memory_get_paddr(uint32_t page_dir, uint32_t vaddr){
+    pte_t * pte = find_pte((pde_t *)page_dir, vaddr, 0);
+
+    if(!pte){
+        return 0;
+    }
+
+    return pte_paddr(pte) + (vaddr & (MEM_PAGE_SIZE -1));
+}

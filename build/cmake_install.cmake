@@ -42,6 +42,7 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   include("C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/boot/cmake_install.cmake")
   include("C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/loader/cmake_install.cmake")
   include("C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/kernel/cmake_install.cmake")
+  include("C:/Users/11580/Desktop/LinuxCore/Linux_86/SourceCode/start/start/build/source/shell/cmake_install.cmake")
 
 endif()
 
